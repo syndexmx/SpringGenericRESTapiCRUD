@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class TestGenericSupplier {
 
-    private static UUID uuid = UUID.randomUUID();
+    private static String id = UUID.randomUUID().toString();
 
     private static String genericString = "Test String";
 
@@ -12,19 +12,19 @@ public class TestGenericSupplier {
 
     public static Generic getTestGeneric( ) {
         return Generic.builder()
-                .genericId(uuid)
+                .genericId(id)
                 .genericString(genericString)
                 .build();
     }
 
     public static Generic getModifiedTestGeneric( ) {
         return Generic.builder()
-                .genericId(uuid)
+                .genericId(id)
                 .genericString(genericString)
                 .build();
     }
 
-    private static UUID nonExistentUuid = UUID.randomUUID();
+    private static String nonExistentUuid = UUID.randomUUID().toString();
 
     private static String nonExistentString = "non existent String";
 

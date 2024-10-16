@@ -5,15 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class Generic {
 
-    private UUID genericId;
+    private String genericId;
 
     private String genericString;
 

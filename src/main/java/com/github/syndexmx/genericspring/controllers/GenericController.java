@@ -34,7 +34,7 @@ public class GenericController {
     }
 
     @GetMapping("/api/v0/generics/{genericId}")
-    public ResponseEntity<GenericDto> retrieveGeneric(@PathVariable UUID genericId) {
+    public ResponseEntity<GenericDto> retrieveGeneric(@PathVariable String genericId) {
         final Optional<Generic> foundGeneric = genericService.findById(genericId);
         if (foundGeneric.isEmpty()) {
             return new ResponseEntity<GenericDto>(HttpStatus.NOT_FOUND);
@@ -68,7 +68,7 @@ public class GenericController {
     }
 
     @DeleteMapping("/api/v0/generics/{genericId}")
-    public ResponseEntity deleteGenericById(@PathVariable UUID genericId) {
+    public ResponseEntity deleteGenericById(@PathVariable String genericId) {
         genericService.deleteGenericById(genericId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

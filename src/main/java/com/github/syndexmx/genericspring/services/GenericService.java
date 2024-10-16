@@ -14,14 +14,14 @@ public interface GenericService {
 
     Generic save(Generic generic);
 
-    Optional<Generic> findById(UUID genericId);
+    Optional<Generic> findById(String genericId);
 
     List<Generic> listGenerics();
 
-    boolean isPresent(UUID genericId);
+    boolean isPresent(String genericId);
 
     boolean isPresent(Generic generic);
 
-    void deleteGenericById(UUID genericId);
+    void deleteGenericById(String genericId);
 
 }
