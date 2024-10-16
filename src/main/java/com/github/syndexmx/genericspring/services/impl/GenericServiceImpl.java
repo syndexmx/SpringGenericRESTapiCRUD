@@ -1,14 +1,14 @@
 package com.github.syndexmx.genericspring.services.impl;
 
-import com.github.syndexmx.genericspring.domain.GenericPojo;
+import com.github.syndexmx.genericspring.domain.Generic;
 import com.github.syndexmx.genericspring.entities.GenericEntity;
 import com.github.syndexmx.genericspring.repositories.GenericRepository;
 import com.github.syndexmx.genericspring.services.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.github.syndexmx.genericspring.entities.GenericEntity.genericEntityToGenericPojo;
-import static com.github.syndexmx.genericspring.entities.GenericEntity.genericPojoToGenericEntity;
+import static com.github.syndexmx.genericspring.entities.GenericEntity.genericEntityToGeneric;
+import static com.github.syndexmx.genericspring.entities.GenericEntity.genericToGenericEntity;
 
 @Service
 public class GenericServiceImpl implements GenericService {
@@ -21,9 +21,9 @@ public class GenericServiceImpl implements GenericService {
     }
 
     @Override
-    public GenericPojo create(GenericPojo genericPojo) {
-        final GenericEntity savedEntity = genericRepository.save(genericPojoToGenericEntity(genericPojo));
-        final GenericPojo savedPojo = genericEntityToGenericPojo(savedEntity);
+    public Generic create(Generic generic) {
+        final GenericEntity savedEntity = genericRepository.save(genericToGenericEntity(generic));
+        final Generic savedPojo = genericEntityToGeneric(savedEntity);
         return savedPojo;
     }
 

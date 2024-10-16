@@ -1,0 +1,37 @@
+package com.github.syndexmx.genericspring.services.impl;
+
+
+import com.github.syndexmx.genericspring.domain.Generic;
+import com.github.syndexmx.genericspring.domain.TestGenericSupplier;
+import com.github.syndexmx.genericspring.entities.GenericEntity;
+import com.github.syndexmx.genericspring.repositories.GenericRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static com.github.syndexmx.genericspring.entities.GenericEntity.genericToGenericEntity;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class GenericServiceImplTest {
+
+    @Mock
+    GenericRepository genericRepository;
+
+    @InjectMocks
+    private GenericServiceImpl underTest;
+
+    @Test
+    public void testThatGenericIsCreated() {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final GenericEntity genericEntity = genericToGenericEntity(generic);
+        when(genericRepository.save(eq(genericEntity))).thenReturn(genericEntity);
+        final Generic savedGeneric = underTest.create(generic);
+        assertEquals(generic, savedGeneric);
+    }
+
+}

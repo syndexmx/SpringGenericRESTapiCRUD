@@ -1,6 +1,6 @@
 package com.github.syndexmx.genericspring.dtos;
 
-import com.github.syndexmx.genericspring.domain.GenericPojo;
+import com.github.syndexmx.genericspring.domain.Generic;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,19 +18,19 @@ public class GenericDto {
 
     private String genericString;
 
-    public static GenericDto genericPojoToGenericEntity(GenericPojo genericPojo) {
+    public static GenericDto genericToGenericEntity(Generic generic) {
         final GenericDto genericDto = GenericDto.builder()
-                .genericId(genericPojo.getGenericId())
-                .genericString(genericPojo.getGenericString())
+                .genericId(generic.getGenericId())
+                .genericString(generic.getGenericString())
                 .build();
         return genericDto;
     }
 
-    public static GenericPojo genericPojo(GenericDto genericDto) {
-        GenericPojo genericPojo = GenericPojo.builder()
+    public static Generic generic(GenericDto genericDto) {
+        Generic generic = Generic.builder()
                 .genericId(genericDto.getGenericId())
                 .genericString(genericDto.getGenericString())
                 .build();
-        return genericPojo;
+        return generic;
     }
 }
