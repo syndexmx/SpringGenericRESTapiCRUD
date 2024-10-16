@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -54,6 +56,23 @@ public class GenericServiceImplTest {
         when(genericRepository.findById(eq(uuid))).thenReturn(Optional.of(genericEntity));
         final Optional<Generic> foundGeneric = underTest.findById(uuid);
         assertEquals(Optional.of(generic), foundGeneric);
+    }
+
+    @Test
+    public void testListGenericsReturnsEmptyListWhenAbsent() {
+        when(genericRepository.findAll()).thenReturn(new ArrayList<GenericEntity>());
+        final List<Generic> result = underTest.listGenerics();
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    public void testListGenericsReturnsListWhenExist() {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final GenericEntity genericEntity = genericToGenericEntity(generic);
+        List<GenericEntity> listOfExisting = new ArrayList<>(List.of(genericEntity));
+        when(genericRepository.findAll()).thenReturn(listOfExisting);
+        final List<Generic> result = underTest.listGenerics();
+        assertEquals(listOfExisting.size(), result.size());
     }
 
 }

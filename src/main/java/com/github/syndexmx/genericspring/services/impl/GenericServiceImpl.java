@@ -7,6 +7,7 @@ import com.github.syndexmx.genericspring.services.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,6 +37,14 @@ public class GenericServiceImpl implements GenericService {
         final Optional<Generic> genericFound = genericEntityFound.map(genericEntity ->
                 genericEntityToGeneric(genericEntity));
         return genericFound;
+    }
+
+    @Override
+    public List<Generic> listGenerics() {
+        final List<GenericEntity> listOfFoundGenericEntities = genericRepository.findAll();
+        final List<Generic> listOfFoundGenerics =listOfFoundGenericEntities.stream()
+                .map(entity -> genericEntityToGeneric(entity)).toList();
+        return listOfFoundGenerics;
     }
 
 }

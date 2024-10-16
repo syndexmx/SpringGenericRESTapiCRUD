@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,6 +40,16 @@ public class GenericController {
             final GenericDto genericDto = genericToGenericDto(foundGeneric.get());
             return new ResponseEntity<GenericDto>(genericDto, HttpStatus.FOUND);
         }
+    }
+
+    @GetMapping("/api/v0/generics")
+    public ResponseEntity<List<GenericDto>> retrieveAllGenerics() {
+        final List<Generic> listFoundGenerics = genericService.listGenerics();
+        final List<GenericDto> listFoundGenericDtos = listFoundGenerics.stream()
+                .map(generic -> genericToGenericDto(generic)).toList();
+        final ResponseEntity<List<GenericDto>> response = new ResponseEntity<>(listFoundGenericDtos,
+                HttpStatus.OK);
+        return response;
     }
 
 }

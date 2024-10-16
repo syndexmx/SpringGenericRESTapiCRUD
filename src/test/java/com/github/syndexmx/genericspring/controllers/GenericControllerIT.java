@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -67,5 +69,12 @@ public class GenericControllerIT {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v0/generics/" + genericId))
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.content().json(genericJson));
+    }
+
+    @Test
+    public void testThatRetrieveAllReturnsEmptyWhenAbsent() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v0/generics"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 }
