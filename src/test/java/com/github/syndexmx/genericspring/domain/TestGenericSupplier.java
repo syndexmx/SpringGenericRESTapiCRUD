@@ -8,7 +8,16 @@ public class TestGenericSupplier {
 
     private static String genericString = "Test String";
 
+    private static String genericStringModified = "Modified Test String";
+
     public static Generic getTestGeneric( ) {
+        return Generic.builder()
+                .genericId(uuid)
+                .genericString(genericString)
+                .build();
+    }
+
+    public static Generic getModifiedTestGeneric( ) {
         return Generic.builder()
                 .genericId(uuid)
                 .genericString(genericString)

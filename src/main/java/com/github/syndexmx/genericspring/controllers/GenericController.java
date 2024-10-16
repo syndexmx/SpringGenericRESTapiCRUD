@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.github.syndexmx.genericspring.dtos.GenericDto.genericDtoToGeneric;
 import static com.github.syndexmx.genericspring.dtos.GenericDto.genericToGenericDto;
 
 @RestController
@@ -25,7 +26,8 @@ public class GenericController {
     }
 
     @PostMapping("/api/v0/generics")
-    public ResponseEntity<GenericDto> createEntity(@RequestBody final Generic generic) {
+    public ResponseEntity<GenericDto> createEntity(@RequestBody final GenericDto genericDto) {
+        final Generic generic = genericDtoToGeneric(genericDto);
         final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
                 genericToGenericDto(genericService.create(generic)), HttpStatus.CREATED);
         return responseEntity;
@@ -50,6 +52,19 @@ public class GenericController {
         final ResponseEntity<List<GenericDto>> response = new ResponseEntity<>(listFoundGenericDtos,
                 HttpStatus.OK);
         return response;
+    }
+
+    @PutMapping("/api/v0/generics")
+    public ResponseEntity<GenericDto> updateEntity(@RequestBody final GenericDto genericDto) {
+        final Generic generic = genericDtoToGeneric(genericDto);
+        if (!genericService.isPresent(generic)) {
+            final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
+                    genericToGenericDto(genericService.save(generic)), HttpStatus.CREATED);
+            return responseEntity;
+        }
+        final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
+                genericToGenericDto(genericService.save(generic)), HttpStatus.OK);
+        return responseEntity;
     }
 
 }

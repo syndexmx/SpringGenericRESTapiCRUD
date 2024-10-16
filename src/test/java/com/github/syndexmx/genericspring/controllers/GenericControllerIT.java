@@ -51,6 +51,28 @@ public class GenericControllerIT {
     }
 
     @Test
+    public void testThatGenericIsUpdated() throws Exception {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final GenericDto genericDto = GenericDto.genericToGenericDto(generic);
+        final ObjectMapper objectMappper = new ObjectMapper();
+        final String genericJson = objectMappper.writeValueAsString(genericDto);
+        final Generic modifiedGeneric = TestGenericSupplier.getModifiedTestGeneric();
+        final GenericDto modifiedGenericDto = GenericDto.genericToGenericDto(modifiedGeneric);
+        final ObjectMapper modifiedObjectMapper = new ObjectMapper();
+        final String modifiedGenericJson = modifiedObjectMapper.writeValueAsString(modifiedGenericDto);
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v0/generics")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(genericJson))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().json(genericJson));
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v0/generics")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(modifiedGenericJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(modifiedGenericJson));
+    }
+
+    @Test
     public void testThatRetrieveReturnsNotFoundWhenAbsent() throws Exception {
         final Generic generic = TestGenericSupplier.getTestNonExistentGeneric();
         final UUID genericId = generic.getGenericId();

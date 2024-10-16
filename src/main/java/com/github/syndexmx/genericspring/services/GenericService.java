@@ -10,9 +10,17 @@ import java.util.UUID;
 @Service
 public interface GenericService {
 
-    public Generic create(Generic generic);
+    Generic create(Generic generic);
 
-    Optional<Generic> findById(UUID genericUuid);
+    Generic save(Generic generic);
+
+    Optional<Generic> findById(UUID genericId);
 
     List<Generic> listGenerics();
+
+    boolean isPresent(UUID genericId);
+
+    boolean isPresent(Generic generic);
+
+
 }

@@ -32,8 +32,15 @@ public class GenericServiceImpl implements GenericService {
     }
 
     @Override
-    public Optional<Generic> findById(UUID genericUuid) {
-        final Optional<GenericEntity> genericEntityFound = genericRepository.findById(genericUuid);
+    public Generic save(Generic generic) {
+        final GenericEntity savedEntity = genericRepository.save(genericToGenericEntity(generic));
+        final Generic savedGeneric = genericEntityToGeneric(savedEntity);
+        return savedGeneric;
+    }
+
+    @Override
+    public Optional<Generic> findById(UUID genericId) {
+        final Optional<GenericEntity> genericEntityFound = genericRepository.findById(genericId);
         final Optional<Generic> genericFound = genericEntityFound.map(genericEntity ->
                 genericEntityToGeneric(genericEntity));
         return genericFound;
@@ -45,6 +52,16 @@ public class GenericServiceImpl implements GenericService {
         final List<Generic> listOfFoundGenerics =listOfFoundGenericEntities.stream()
                 .map(entity -> genericEntityToGeneric(entity)).toList();
         return listOfFoundGenerics;
+    }
+
+    @Override
+    public boolean isPresent(UUID genericId) {
+        return genericRepository.existsById(genericId);
+    }
+
+    @Override
+    public boolean isPresent(Generic generic) {
+        return genericRepository.existsById(generic.getGenericId());
     }
 
 }
