@@ -18,7 +18,7 @@ public class GenericDto {
 
     private String genericString;
 
-    public GenericDto genericPojoToGenericEntity(GenericPojo genericPojo) {
+    public static GenericDto genericPojoToGenericEntity(GenericPojo genericPojo) {
         final GenericDto genericDto = GenericDto.builder()
                 .genericId(genericPojo.getGenericId())
                 .genericString(genericPojo.getGenericString())
@@ -26,7 +26,7 @@ public class GenericDto {
         return genericDto;
     }
 
-    public GenericPojo genericPojo(GenericDto genericDto) {
+    public static GenericPojo genericPojo(GenericDto genericDto) {
         GenericPojo genericPojo = GenericPojo.builder()
                 .genericId(genericDto.getGenericId())
                 .genericString(genericDto.getGenericString())
