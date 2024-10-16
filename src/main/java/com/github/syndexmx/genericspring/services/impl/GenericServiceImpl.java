@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GenericServiceImpl implements GenericService {
 
-    private GenericRepository genericRepository;
+    private final GenericRepository genericRepository;
 
     @Autowired
     private GenericServiceImpl(GenericRepository genericRepository) {

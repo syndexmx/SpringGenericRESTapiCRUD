@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GenericController {
 
-    private GenericService genericService;
+    private final GenericService genericService;
 
     @Autowired
     private GenericController(GenericService genericService) {

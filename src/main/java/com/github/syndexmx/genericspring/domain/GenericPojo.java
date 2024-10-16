@@ -13,7 +13,7 @@ import java.util.UUID;
 @Data
 public class GenericPojo {
 
-    private UUID genericPojoId;
+    private UUID genericId;
 
     private String genericString;
 
