@@ -61,11 +61,11 @@ public class GenericControllerIT {
     @Test
     public void testThatRetrieveReturnsGenericWhenExists() throws Exception {
         final Generic generic = TestGenericSupplier.getTestGeneric();
-        final Generic genericSaved =genericService.create(generic);
+        final Generic genericSaved = genericService.create(generic);
         final UUID genericId = genericSaved.getGenericId();
         final GenericDto genericDto = GenericDto.genericToGenericDto(genericSaved);
-        final ObjectMapper objectMappper = new ObjectMapper();
-        final String genericJson = objectMappper.writeValueAsString(genericDto);
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final String genericJson = objectMapper.writeValueAsString(genericDto);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v0/generics/" + genericId))
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.content().json(genericJson));
@@ -76,5 +76,19 @@ public class GenericControllerIT {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v0/generics"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
+
+    @Test
+    public void testThatRetrieveAllReturnsListWhenExist() throws Exception {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final Generic genericSaved = genericService.create(generic);
+        final GenericDto genericDto = GenericDto.genericToGenericDto(genericSaved);
+        final List<GenericDto> listGenericDto = new ArrayList<>(List.of(genericDto));
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final String genericListJson = objectMapper.writeValueAsString(listGenericDto);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v0/generics"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(genericListJson));
+
     }
 }
