@@ -67,4 +67,9 @@ public class GenericController {
         return responseEntity;
     }
 
+    @DeleteMapping("/api/v0/generics/{genericId}")
+    public ResponseEntity deleteGenericById(@PathVariable UUID genericId) {
+        genericService.deleteGenericById(genericId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }
