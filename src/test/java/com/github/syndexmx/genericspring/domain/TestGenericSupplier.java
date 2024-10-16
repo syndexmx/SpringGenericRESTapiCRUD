@@ -15,4 +15,15 @@ public class TestGenericSupplier {
                 .build();
     }
 
+    private static UUID nonExistentUuid = UUID.randomUUID();
+
+    private static String nonExistentString = "non existent String";
+
+    public static Generic getTestNonExistentGeneric( ) {
+        return Generic.builder()
+                .genericId(nonExistentUuid)
+                .genericString(nonExistentString)
+                .build();
+    }
+
 }
