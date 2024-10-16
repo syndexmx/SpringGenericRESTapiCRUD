@@ -11,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @Data
-public class GenericPojo {
+public class Generic {
 
     private UUID genericId;
 
