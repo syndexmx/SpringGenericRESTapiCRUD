@@ -1,6 +1,19 @@
 package com.github.syndexmx.genericspring.services.impl;
 
+import com.github.syndexmx.genericspring.repositories.GenericRepository;
 import com.github.syndexmx.genericspring.services.GenericService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class GenericServiceImpl extends GenericService {
+@Service
+public class GenericServiceImpl implements GenericService {
+
+    private GenericRepository genericRepository;
+
+    @Autowired
+    private GenericServiceImpl(GenericRepository genericRepository) {
+        this.genericRepository = genericRepository;
+    }
+
+
 }
