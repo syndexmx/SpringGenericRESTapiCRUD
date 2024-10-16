@@ -27,7 +27,7 @@ public class GenericEntity {
     @Column(name = "generic_string")
     private String genericString;
 
-    public GenericEntity genericPojoToGenericEntity(GenericPojo genericPojo) {
+    public static GenericEntity genericPojoToGenericEntity(GenericPojo genericPojo) {
         final GenericEntity genericEntity = GenericEntity.builder()
                 .genericId(genericPojo.getGenericId())
                 .genericString(genericPojo.getGenericString())
@@ -35,7 +35,7 @@ public class GenericEntity {
         return genericEntity;
     }
 
-    public GenericPojo genericPojo(GenericEntity genericEntity) {
+    public static GenericPojo genericEntityToGenericPojo(GenericEntity genericEntity) {
         GenericPojo genericPojo = GenericPojo.builder()
                 .genericId(genericEntity.getGenericId())
                 .genericString(genericEntity.getGenericString())
