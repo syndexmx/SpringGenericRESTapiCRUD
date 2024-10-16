@@ -20,6 +20,7 @@ import static com.github.syndexmx.genericspring.entities.GenericEntity.genericTo
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -120,6 +121,11 @@ public class GenericServiceImplTest {
         assertTrue(result);
     }
 
-
-
+    @Test
+    public void testThatDeleteGenericDeletesGeneric() {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final UUID genericId = generic.getGenericId();
+        underTest.deleteGenericById(genericId);
+        verify(genericRepository).deleteById(eq(genericId));
+    }
 }

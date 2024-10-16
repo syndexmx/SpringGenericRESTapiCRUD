@@ -4,7 +4,9 @@ import com.github.syndexmx.genericspring.domain.Generic;
 import com.github.syndexmx.genericspring.entities.GenericEntity;
 import com.github.syndexmx.genericspring.repositories.GenericRepository;
 import com.github.syndexmx.genericspring.services.GenericService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import static com.github.syndexmx.genericspring.entities.GenericEntity.genericEn
 import static com.github.syndexmx.genericspring.entities.GenericEntity.genericToGenericEntity;
 
 @Service
+@Slf4j
 public class GenericServiceImpl implements GenericService {
 
     private final GenericRepository genericRepository;
@@ -62,6 +65,15 @@ public class GenericServiceImpl implements GenericService {
     @Override
     public boolean isPresent(Generic generic) {
         return genericRepository.existsById(generic.getGenericId());
+    }
+
+    @Override
+    public void deleteGenericById(UUID genericId) {
+        try {
+            genericRepository.deleteById(genericId);
+        } catch (final EmptyResultDataAccessException e) {
+            log.debug("Attempted to delete non-existent generic");
+        }
     }
 
 }

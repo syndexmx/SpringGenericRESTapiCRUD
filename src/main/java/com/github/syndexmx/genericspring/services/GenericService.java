@@ -22,5 +22,6 @@ public interface GenericService {
 
     boolean isPresent(Generic generic);
 
+    void deleteGenericById(UUID genericId);
 
 }

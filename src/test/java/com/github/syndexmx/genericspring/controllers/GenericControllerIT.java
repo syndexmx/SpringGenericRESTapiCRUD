@@ -113,4 +113,21 @@ public class GenericControllerIT {
                 .andExpect(MockMvcResultMatchers.content().json(genericListJson));
 
     }
+
+    @Test
+    public void testThatDeleteGenericByIdReturnsHttp204WhenAbsent() throws Exception {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final UUID genericId = generic.getGenericId();
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v0/generics/" + genericId))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void testThatDeleteGenericByIdDeletesGeneric() throws Exception {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final Generic savedGeneric = genericService.save(generic);
+        final UUID genericId = savedGeneric.getGenericId();
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v0/generics/" + genericId))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }
