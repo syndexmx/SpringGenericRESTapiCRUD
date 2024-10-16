@@ -18,7 +18,7 @@ public class GenericDto {
 
     private String genericString;
 
-    public static GenericDto genericToGenericEntity(Generic generic) {
+    public static GenericDto genericToGenericDto(Generic generic) {
         final GenericDto genericDto = GenericDto.builder()
                 .genericId(generic.getGenericId())
                 .genericString(generic.getGenericString())
