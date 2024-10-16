@@ -11,6 +11,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import static com.github.syndexmx.genericspring.entities.GenericEntity.genericToGenericEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
@@ -32,6 +35,25 @@ public class GenericServiceImplTest {
         when(genericRepository.save(eq(genericEntity))).thenReturn(genericEntity);
         final Generic savedGeneric = underTest.create(generic);
         assertEquals(generic, savedGeneric);
+    }
+
+    @Test
+    public void testThatFindByIdReturnsEmptyWhenNoEntity() {
+        final Generic nonExistentGeneric = TestGenericSupplier.getTestNonExistentGeneric();
+        final UUID nonExistentUuid = nonExistentGeneric.getGenericId();
+        when(genericRepository.findById(eq(nonExistentUuid))).thenReturn(Optional.empty());
+        final Optional<Generic> foundGeneric = underTest.findById(nonExistentUuid);
+        assertEquals(Optional.empty(), foundGeneric);
+    }
+
+    @Test
+    public void testThatFindByIdReturnsEntityWhenPresent() {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final GenericEntity genericEntity = GenericEntity.genericToGenericEntity(generic);
+        final UUID uuid = generic.getGenericId();
+        when(genericRepository.findById(eq(uuid))).thenReturn(Optional.of(genericEntity));
+        final Optional<Generic> foundGeneric = underTest.findById(uuid);
+        assertEquals(Optional.of(generic), foundGeneric);
     }
 
 }
