@@ -1,4 +1,7 @@
 package com.github.syndexmx.genericspring.services;
 
-public class GenericService {
+import org.springframework.stereotype.Service;
+
+@Service
+public interface GenericService {
 }
