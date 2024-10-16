@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 public class GenericDto {
 
-    private UUID genericId;
+    private String genericId;
 
     private String genericString;
 

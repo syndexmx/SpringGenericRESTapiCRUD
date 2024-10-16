@@ -29,7 +29,7 @@ public class GenericEntity {
 
     public static GenericEntity genericToGenericEntity(Generic generic) {
         final GenericEntity genericEntity = GenericEntity.builder()
-                .genericId(generic.getGenericId())
+                .genericId(UUID.fromString(generic.getGenericId()))
                 .genericString(generic.getGenericString())
                 .build();
         return genericEntity;
@@ -37,7 +37,7 @@ public class GenericEntity {
 
     public static Generic genericEntityToGeneric(GenericEntity genericEntity) {
         Generic generic = Generic.builder()
-                .genericId(genericEntity.getGenericId())
+                .genericId(genericEntity.getGenericId().toString())
                 .genericString(genericEntity.getGenericString())
                 .build();
         return generic;

@@ -53,9 +53,9 @@ public class GenericServiceImplTest {
     @Test
     public void testThatFindByIdReturnsEmptyWhenNoEntity() {
         final Generic nonExistentGeneric = TestGenericSupplier.getTestNonExistentGeneric();
-        final UUID nonExistentUuid = nonExistentGeneric.getGenericId();
-        when(genericRepository.findById(eq(nonExistentUuid))).thenReturn(Optional.empty());
-        final Optional<Generic> foundGeneric = underTest.findById(nonExistentUuid);
+        final String nonExistentId = nonExistentGeneric.getGenericId();
+        when(genericRepository.findById(eq(UUID.fromString(nonExistentId)))).thenReturn(Optional.empty());
+        final Optional<Generic> foundGeneric = underTest.findById(nonExistentId);
         assertEquals(Optional.empty(), foundGeneric);
     }
 
@@ -63,9 +63,9 @@ public class GenericServiceImplTest {
     public void testThatFindByIdReturnsEntityWhenPresent() {
         final Generic generic = TestGenericSupplier.getTestGeneric();
         final GenericEntity genericEntity = GenericEntity.genericToGenericEntity(generic);
-        final UUID uuid = generic.getGenericId();
-        when(genericRepository.findById(eq(uuid))).thenReturn(Optional.of(genericEntity));
-        final Optional<Generic> foundGeneric = underTest.findById(uuid);
+        final String id = generic.getGenericId();
+        when(genericRepository.findById(eq(UUID.fromString(id)))).thenReturn(Optional.of(genericEntity));
+        final Optional<Generic> foundGeneric = underTest.findById(id);
         assertEquals(Optional.of(generic), foundGeneric);
     }
 
@@ -90,7 +90,7 @@ public class GenericServiceImplTest {
     public void testThatIsPresentReturnsFalseWhenAbsent() {
         when(genericRepository.existsById(any())).thenReturn(false);
         final Generic nonExistentGeneric = TestGenericSupplier.getTestNonExistentGeneric();
-        final UUID nonExistentUuid = nonExistentGeneric.getGenericId();
+        final String nonExistentUuid = nonExistentGeneric.getGenericId();
         boolean result = underTest.isPresent(nonExistentUuid);
         assertFalse(result);
     }
@@ -98,8 +98,8 @@ public class GenericServiceImplTest {
     @Test
     public void testThatIsPresentReturnsTrueWhenExists() {
         final Generic generic = TestGenericSupplier.getTestGeneric();
-        final UUID genericId = generic.getGenericId();
-        when(genericRepository.existsById(genericId)).thenReturn(true);
+        final String genericId = generic.getGenericId();
+        when(genericRepository.existsById(UUID.fromString(genericId))).thenReturn(true);
         boolean result = underTest.isPresent(genericId);
         assertTrue(result);
     }
@@ -115,8 +115,8 @@ public class GenericServiceImplTest {
     @Test
     public void testThatGenericIsPresentReturnsTrueWhenExists() {
         final Generic generic = TestGenericSupplier.getTestGeneric();
-        final UUID genericId = generic.getGenericId();
-        when(genericRepository.existsById(genericId)).thenReturn(true);
+        final String genericId = generic.getGenericId();
+        when(genericRepository.existsById(UUID.fromString(genericId))).thenReturn(true);
         boolean result = underTest.isPresent(generic);
         assertTrue(result);
     }
@@ -124,8 +124,8 @@ public class GenericServiceImplTest {
     @Test
     public void testThatDeleteGenericDeletesGeneric() {
         final Generic generic = TestGenericSupplier.getTestGeneric();
-        final UUID genericId = generic.getGenericId();
+        final String genericId = generic.getGenericId();
         underTest.deleteGenericById(genericId);
-        verify(genericRepository).deleteById(eq(genericId));
+        verify(genericRepository).deleteById(eq(UUID.fromString(genericId)));
     }
 }
