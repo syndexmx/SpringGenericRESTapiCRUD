@@ -29,6 +29,11 @@ public class GenericServiceImpl implements GenericService {
 
     @Override
     public Generic create(Generic generic) {
+        String spoofId;
+        do {
+            spoofId = UUID.randomUUID().toString();
+        } while (genericRepository.existsById(UUID.fromString(spoofId)));
+        generic.setGenericId(spoofId);
         final GenericEntity savedEntity = genericRepository.save(genericToGenericEntity(generic));
         final Generic savedGeneric = genericEntityToGeneric(savedEntity);
         return savedGeneric;
