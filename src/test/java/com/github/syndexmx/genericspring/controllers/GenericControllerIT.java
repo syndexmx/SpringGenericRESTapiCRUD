@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class GenericControllerIT {
 
     @Autowired
@@ -30,10 +32,10 @@ public class GenericControllerIT {
     @Test
     public void testThatGenericIsCreated() throws Exception {
         final Generic generic = TestGenericSupplier.getTestGeneric();
-        final ObjectMapper objectMappper = new ObjectMapper();
         final GenericDto genericDto = GenericDto.genericToGenericDto(generic);
+        final ObjectMapper objectMappper = new ObjectMapper();
         final String genericJson = objectMappper.writeValueAsString(genericDto);
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/v0/generics")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v0/generics")
                 .contentType(MediaType.APPLICATION_JSON)
                         .content(genericJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
