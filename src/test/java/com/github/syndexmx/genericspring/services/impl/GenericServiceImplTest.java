@@ -17,7 +17,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.github.syndexmx.genericspring.entities.GenericEntity.genericToGenericEntity;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -36,6 +37,15 @@ public class GenericServiceImplTest {
         final GenericEntity genericEntity = genericToGenericEntity(generic);
         when(genericRepository.save(eq(genericEntity))).thenReturn(genericEntity);
         final Generic savedGeneric = underTest.create(generic);
+        assertEquals(generic, savedGeneric);
+    }
+
+    @Test
+    public void testThatGenericIsSaved() {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final GenericEntity genericEntity = genericToGenericEntity(generic);
+        when(genericRepository.save(eq(genericEntity))).thenReturn(genericEntity);
+        final Generic savedGeneric = underTest.save(generic);
         assertEquals(generic, savedGeneric);
     }
 
@@ -74,5 +84,42 @@ public class GenericServiceImplTest {
         final List<Generic> result = underTest.listGenerics();
         assertEquals(listOfExisting.size(), result.size());
     }
+
+    @Test
+    public void testThatIsPresentReturnsFalseWhenAbsent() {
+        when(genericRepository.existsById(any())).thenReturn(false);
+        final Generic nonExistentGeneric = TestGenericSupplier.getTestNonExistentGeneric();
+        final UUID nonExistentUuid = nonExistentGeneric.getGenericId();
+        boolean result = underTest.isPresent(nonExistentUuid);
+        assertFalse(result);
+    }
+
+    @Test
+    public void testThatIsPresentReturnsTrueWhenExists() {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final UUID genericId = generic.getGenericId();
+        when(genericRepository.existsById(genericId)).thenReturn(true);
+        boolean result = underTest.isPresent(genericId);
+        assertTrue(result);
+    }
+
+    @Test
+    public void testThatGenericIsPresentReturnsFalseWhenAbsent() {
+        when(genericRepository.existsById(any())).thenReturn(false);
+        final Generic nonExistentGeneric = TestGenericSupplier.getTestNonExistentGeneric();
+        boolean result = underTest.isPresent(nonExistentGeneric);
+        assertFalse(result);
+    }
+
+    @Test
+    public void testThatGenericIsPresentReturnsTrueWhenExists() {
+        final Generic generic = TestGenericSupplier.getTestGeneric();
+        final UUID genericId = generic.getGenericId();
+        when(genericRepository.existsById(genericId)).thenReturn(true);
+        boolean result = underTest.isPresent(generic);
+        assertTrue(result);
+    }
+
+
 
 }

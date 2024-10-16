@@ -26,7 +26,7 @@ public class GenericDto {
         return genericDto;
     }
 
-    public static Generic generic(GenericDto genericDto) {
+    public static Generic genericDtoToGeneric(GenericDto genericDto) {
         Generic generic = Generic.builder()
                 .genericId(genericDto.getGenericId())
                 .genericString(genericDto.getGenericString())
