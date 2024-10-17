@@ -1,6 +1,7 @@
 package com.github.syndexmx.genericspring.services.impl;
 
 
+import com.github.syndexmx.genericspring.annotations.CopyCatClass;
 import com.github.syndexmx.genericspring.domain.Generic;
 import com.github.syndexmx.genericspring.domain.TestGenericSupplier;
 import com.github.syndexmx.genericspring.entities.GenericEntity;
@@ -23,6 +24,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@CopyCatClass
 @ExtendWith(MockitoExtension.class)
 public class GenericServiceImplTest {
 
@@ -34,11 +36,21 @@ public class GenericServiceImplTest {
 
     @Test
     public void testThatGenericIsCreated() {
-        final Generic generic = TestGenericSupplier.getTestGeneric();
+        Generic generic = TestGenericSupplier.getTestGeneric();
         final GenericEntity genericEntity = genericToGenericEntity(generic);
+        final UUID uuidGiven = UUID.randomUUID();
+        final GenericEntity genericEntityReturned = genericToGenericEntity(
+                Generic.builder()
+                        .genericId(uuidGiven.toString())
+                        .genericString(generic.getGenericString())
+                        .build());
         when(genericRepository.save(eq(genericEntity))).thenReturn(genericEntity);
-        final Generic savedGeneric = underTest.create(generic);
-        assertEquals(generic, savedGeneric);
+        Generic savedGeneric = underTest.create(generic);
+        Generic ethalonGeneric = Generic.builder()
+                .genericId(uuidGiven.toString())
+                .genericString(generic.getGenericString())
+                .build();
+        assertEquals(ethalonGeneric, savedGeneric);
     }
 
     @Test

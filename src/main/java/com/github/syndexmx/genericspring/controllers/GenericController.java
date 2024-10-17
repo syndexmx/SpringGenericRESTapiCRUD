@@ -1,5 +1,6 @@
 package com.github.syndexmx.genericspring.controllers;
 
+import com.github.syndexmx.genericspring.annotations.CopyCatClass;
 import com.github.syndexmx.genericspring.domain.Generic;
 import com.github.syndexmx.genericspring.dtos.GenericDto;
 import com.github.syndexmx.genericspring.services.GenericService;
@@ -15,6 +16,7 @@ import java.util.UUID;
 import static com.github.syndexmx.genericspring.dtos.GenericDto.genericDtoToGeneric;
 import static com.github.syndexmx.genericspring.dtos.GenericDto.genericToGenericDto;
 
+@CopyCatClass
 @RestController
 public class GenericController {
 

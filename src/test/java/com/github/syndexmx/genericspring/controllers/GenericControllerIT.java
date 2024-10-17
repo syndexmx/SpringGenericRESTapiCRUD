@@ -2,6 +2,7 @@ package com.github.syndexmx.genericspring.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.syndexmx.genericspring.annotations.CopyCatClass;
 import com.github.syndexmx.genericspring.domain.Generic;
 import com.github.syndexmx.genericspring.domain.TestGenericSupplier;
 import com.github.syndexmx.genericspring.dtos.GenericDto;
@@ -25,6 +26,7 @@ import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
+@CopyCatClass
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)

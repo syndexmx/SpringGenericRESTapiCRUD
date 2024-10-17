@@ -1,7 +1,10 @@
 package com.github.syndexmx.genericspring.domain;
 
+import com.github.syndexmx.genericspring.annotations.CopyCatClass;
+
 import java.util.UUID;
 
+@CopyCatClass
 public class TestGenericSupplier {
 
     private static String id = UUID.randomUUID().toString();

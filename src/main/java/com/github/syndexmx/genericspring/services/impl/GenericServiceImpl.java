@@ -1,5 +1,6 @@
 package com.github.syndexmx.genericspring.services.impl;
 
+import com.github.syndexmx.genericspring.annotations.CopyCatClass;
 import com.github.syndexmx.genericspring.domain.Generic;
 import com.github.syndexmx.genericspring.entities.GenericEntity;
 import com.github.syndexmx.genericspring.repositories.GenericRepository;
@@ -16,6 +17,7 @@ import java.util.UUID;
 import static com.github.syndexmx.genericspring.entities.GenericEntity.genericEntityToGeneric;
 import static com.github.syndexmx.genericspring.entities.GenericEntity.genericToGenericEntity;
 
+@CopyCatClass
 @Service
 @Slf4j
 public class GenericServiceImpl implements GenericService {
