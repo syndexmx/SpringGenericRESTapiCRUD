@@ -3,6 +3,7 @@ package com.github.syndexmx.genericspring.controllers;
 import com.github.syndexmx.genericspring.domain.Generic;
 import com.github.syndexmx.genericspring.dtos.GenericDto;
 import com.github.syndexmx.genericspring.services.GenericService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
