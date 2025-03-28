@@ -1,5 +1,6 @@
 package com.github.syndexmx.genericspring.controllers;
 
+import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import com.github.syndexmx.genericspring.domain.GenericObject;
 import com.github.syndexmx.genericspring.controllers.dtos.GenericDto;
 import com.github.syndexmx.genericspring.services.GenericService;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 import static com.github.syndexmx.genericspring.controllers.mappers.GenericDtoMapper.*;
 
+@TemplatedAnnotation
 @RestController
 public class GenericController {
 

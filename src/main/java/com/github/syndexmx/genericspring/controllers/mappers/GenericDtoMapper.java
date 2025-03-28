@@ -1,10 +1,12 @@
 package com.github.syndexmx.genericspring.controllers.mappers;
 
+import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import com.github.syndexmx.genericspring.controllers.dtos.GenericDto;
 import com.github.syndexmx.genericspring.domain.GenericObject;
 
 import java.util.UUID;
 
+@TemplatedAnnotation
 public class GenericDtoMapper {
 
     public static GenericDto genericToGenericDto(GenericObject genericObject) {

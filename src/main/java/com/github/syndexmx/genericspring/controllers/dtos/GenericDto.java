@@ -1,10 +1,12 @@
 package com.github.syndexmx.genericspring.controllers.dtos;
 
+import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@TemplatedAnnotation
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

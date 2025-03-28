@@ -1,8 +1,10 @@
 package com.github.syndexmx.genericspring.repositories.mappers;
 
+import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import com.github.syndexmx.genericspring.domain.GenericObject;
 import com.github.syndexmx.genericspring.repositories.entities.GenericEntity;
 
+@TemplatedAnnotation
 public class GenericEntityMapper {
 
     public static GenericEntity genericToGenericEntity(GenericObject genericObject) {

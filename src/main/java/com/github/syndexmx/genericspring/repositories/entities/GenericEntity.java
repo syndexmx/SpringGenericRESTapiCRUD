@@ -1,5 +1,6 @@
 package com.github.syndexmx.genericspring.repositories.entities;
 
+import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+@TemplatedAnnotation
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,6 +1,7 @@
 package com.github.syndexmx.genericspring.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import com.github.syndexmx.genericspring.domain.GenericObject;
 import com.github.syndexmx.genericspring.domain.GenericObjectTestSupplierKit;
 import com.github.syndexmx.genericspring.controllers.dtos.GenericDto;
@@ -24,6 +25,7 @@ import java.util.UUID;
 import static com.github.syndexmx.genericspring.controllers.mappers.GenericDtoMapper.genericToGenericDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TemplatedAnnotation
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
