@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 public @interface TemplatedAnnotation {
 
     String genericPackageAddress = "com.github.syndexmx.genericspring";
-    String targetPackageAddress = "com.github.syndexmx.genericspring";
+    String targetPackageAddress = "com.github.syndexmx.targetspringproject";
 
     String genericObjectClass = "GenericObject";
     String targetObjectClass = "Target";
@@ -19,6 +19,7 @@ public @interface TemplatedAnnotation {
 
     String genericName = "Generic";
     String targetName = "Target";
+
     String genericLowCaseName = "generic";
     String targetLowCaseName = "target";
 
@@ -26,8 +27,8 @@ public @interface TemplatedAnnotation {
     String targetIdType = "UUID";
 
     String genericFieldTypes = "GenericFields";
+    String targetFieldTypes = "TargetFields";
     String genericFieldNames = "genericFields";
-    // Fields in Target Class %
-    String anyTargetFieldName = "";
-    // Fields end %
+    String targetFieldNames = "targetFields";
+
 }
