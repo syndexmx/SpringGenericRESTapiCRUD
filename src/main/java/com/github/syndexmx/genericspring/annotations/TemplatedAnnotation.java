@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 public @interface TemplatedAnnotation {
 
     String genericPackageAddress = "com.github.syndexmx.genericspring";
-    String targetPackageAddress = "com.github.syndexmx.demo"; //change here
+    String targetPackageAddress = "com.github.syndexmx.targetspringproject"; //change here
 
     String genericObjectClass = "GenericObject";
     String targetObjectClass = "Target"; //change here

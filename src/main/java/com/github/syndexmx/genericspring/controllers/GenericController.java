@@ -48,7 +48,7 @@ public class GenericController {
 
     @GetMapping(ROOT_API_PATH)
     public ResponseEntity<List<GenericDto>> retrieveAll() {
-        final List<GenericObject> listFound = genericService.listGenerics();
+        final List<GenericObject> listFound = genericService.listAll();
         final List<GenericDto> listFoundDtos = listFound.stream()
                 .map(generic -> genericToGenericDto(generic)).toList();
         final ResponseEntity<List<GenericDto>> response = new ResponseEntity<>(listFoundDtos,
@@ -71,7 +71,7 @@ public class GenericController {
 
     @DeleteMapping(ROOT_API_PATH +"/{genericId}")
     public ResponseEntity deleteById(@PathVariable String genericId) {
-        genericService.deleteGenericById(genericId);
+        genericService.deleteById(genericId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

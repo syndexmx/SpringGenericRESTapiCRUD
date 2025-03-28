@@ -22,7 +22,8 @@ public class GenericEntityMapper {
                 .genericFields(GenericFields.valueOf(genericEntity.getGenericFieldContent()))
                 .build();
         return genericObject;
-
     }
+
+
 
 }

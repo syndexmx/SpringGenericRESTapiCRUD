@@ -21,15 +21,15 @@ import static com.github.syndexmx.genericspring.repositories.mappers.GenericEnti
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.willReturn;
+import static org.mockito.Mockito.*;
 
 @TemplatedAnnotation
 @ExtendWith(MockitoExtension.class)
 public class GenericObjectServiceImplTest {
 
     @Mock
-    GenericRepository genericRepository;
+    private GenericRepository genericRepository;
 
     @InjectMocks
     private GenericServiceImpl underTest;
@@ -37,8 +37,8 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatGenericIsCreated() {
         GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final GenericEntity genericEntity = genericToGenericEntity(genericObject);
-        when(genericRepository.save(eq(genericEntity))).thenReturn(genericEntity);
+        GenericEntity genericEntity = genericToGenericEntity(genericObject);
+        when(genericRepository.save(any())).thenReturn(genericEntity);
         final GenericObject savedGenericObject = underTest.create(genericObject);
         genericObject.setId(savedGenericObject.getId());
         assertEquals(genericObject, savedGenericObject);
@@ -75,7 +75,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testListGenericsReturnsEmptyListWhenAbsent() {
         when(genericRepository.findAll()).thenReturn(new ArrayList<GenericEntity>());
-        final List<GenericObject> result = underTest.listGenerics();
+        final List<GenericObject> result = underTest.listAll();
         assertEquals(0, result.size());
     }
 
@@ -85,7 +85,7 @@ public class GenericObjectServiceImplTest {
         final GenericEntity genericEntity = genericToGenericEntity(genericObject);
         List<GenericEntity> listOfExisting = new ArrayList<>(List.of(genericEntity));
         when(genericRepository.findAll()).thenReturn(listOfExisting);
-        final List<GenericObject> result = underTest.listGenerics();
+        final List<GenericObject> result = underTest.listAll();
         assertEquals(listOfExisting.size(), result.size());
     }
 
@@ -128,7 +128,7 @@ public class GenericObjectServiceImplTest {
     public void testThatDeleteGenericDeletesGeneric() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
         final String idString = genericObject.getId().toString();
-        underTest.deleteGenericById(idString);
+        underTest.deleteById(idString);
         verify(genericRepository).deleteById(eq(UUID.fromString(idString)));
     }
 }

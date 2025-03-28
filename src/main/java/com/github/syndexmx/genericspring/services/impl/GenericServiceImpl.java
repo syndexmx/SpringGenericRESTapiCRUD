@@ -31,10 +31,7 @@ public class GenericServiceImpl implements GenericService {
 
     @Override
     public GenericObject create(GenericObject genericObject) {
-        UUID spoofId;
-        do {
-            spoofId = UUID.randomUUID();
-        } while (genericRepository.existsById(spoofId));
+        UUID spoofId = UUID.randomUUID();
         genericObject.setId(spoofId);
         final GenericEntity savedEntity = genericRepository.save(genericToGenericEntity(genericObject));
         final GenericObject savedGenericObject = genericEntityToGeneric(savedEntity);
@@ -58,7 +55,7 @@ public class GenericServiceImpl implements GenericService {
     }
 
     @Override
-    public List<GenericObject> listGenerics() {
+    public List<GenericObject> listAll() {
         final List<GenericEntity> listOfFoundGenericEntities = genericRepository.findAll();
         final List<GenericObject> listOfFoundGenericObjects =listOfFoundGenericEntities.stream()
                 .map(entity -> genericEntityToGeneric(entity)).toList();
@@ -76,7 +73,7 @@ public class GenericServiceImpl implements GenericService {
     }
 
     @Override
-    public void deleteGenericById(String genericId) {
+    public void deleteById(String genericId) {
         try {
             genericRepository.deleteById(UUID.fromString(genericId));
         } catch (final EmptyResultDataAccessException e) {

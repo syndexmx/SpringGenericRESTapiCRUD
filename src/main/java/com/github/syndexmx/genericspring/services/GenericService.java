@@ -17,12 +17,12 @@ public interface GenericService {
 
     Optional<GenericObject> findById(String genericId);
 
-    List<GenericObject> listGenerics();
+    List<GenericObject> listAll();
 
     boolean isPresent(String genericId);
 
     boolean isPresent(GenericObject genericObject);
 
-    void deleteGenericById(String genericId);
+    void deleteById(String genericId);
 
 }

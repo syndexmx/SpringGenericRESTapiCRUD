@@ -27,12 +27,12 @@ public class GenericObjectTestSupplierKit {
     }
 
     private static UUID NON_EXISTENT_UUID = UUID.randomUUID();
-    private static String NON_EXISTANT_STRING = "Non existent String";
+    private static GenericFields NON_EXISTANT_VALUE = GenericFields.OTHERVALUE;
 
     public static GenericObject getTestNonExistentGeneric( ) {
         return GenericObject.builder()
                 .id(NON_EXISTENT_UUID)
-                .genericFields(GenericFields.OTHERVALUE)
+                .genericFields(NON_EXISTANT_VALUE)
                 .build();
     }
 
