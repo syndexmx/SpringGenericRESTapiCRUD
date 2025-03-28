@@ -12,14 +12,14 @@ public class GenericObjectTestSupplierKit {
     public static GenericObject getTestGeneric( ) {
         return GenericObject.builder()
                 .id(id)
-                .genericString(GENERIC_STRING)
+                .genericFieldContent(GENERIC_STRING)
                 .build();
     }
 
     public static GenericObject getModifiedTestGeneric( ) {
         return GenericObject.builder()
                 .id(id)
-                .genericString(GENERIC_STRING_MODIFIED)
+                .genericFieldContent(GENERIC_STRING_MODIFIED)
                 .build();
     }
 
@@ -29,7 +29,7 @@ public class GenericObjectTestSupplierKit {
     public static GenericObject getTestNonExistentGeneric( ) {
         return GenericObject.builder()
                 .id(NON_EXISTENT_UUID)
-                .genericString(NON_EXISTANT_STRING)
+                .genericFieldContent(NON_EXISTANT_STRING)
                 .build();
     }
 

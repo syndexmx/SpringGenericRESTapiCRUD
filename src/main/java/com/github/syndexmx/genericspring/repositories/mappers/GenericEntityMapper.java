@@ -8,7 +8,7 @@ public class GenericEntityMapper {
     public static GenericEntity genericToGenericEntity(GenericObject genericObject) {
         final GenericEntity genericEntity = GenericEntity.builder()
                 .genericId(genericObject.getId())
-                .genericString(genericObject.getGenericString())
+                .genericFieldContent(genericObject.getGenericFieldContent())
                 .build();
         return genericEntity;
     }
@@ -16,7 +16,7 @@ public class GenericEntityMapper {
     public static GenericObject genericEntityToGeneric(GenericEntity genericEntity) {
         GenericObject genericObject = GenericObject.builder()
                 .id(genericEntity.getGenericId())
-                .genericString(genericEntity.getGenericString())
+                .genericFieldContent(genericEntity.getGenericFieldContent())
                 .build();
         return genericObject;
 

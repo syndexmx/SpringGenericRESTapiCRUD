@@ -13,7 +13,7 @@ public class GenericDto {
 
     private String id;
 
-    private String genericString;
+    private String genericFieldContent;
 
 
 }
