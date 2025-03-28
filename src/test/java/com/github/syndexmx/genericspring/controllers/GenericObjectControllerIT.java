@@ -73,7 +73,7 @@ public class GenericObjectControllerIT {
     @Test
     public void testThatRetrieveReturnsNotFoundWhenAbsent() throws Exception {
         final GenericObject genericObject = TestGenericSupplier.getTestNonExistentGeneric();
-        final String genericId = genericObject.getGenericId();
+        final String genericId = genericObject.getId();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v0/generics/" + genericId))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
@@ -82,7 +82,7 @@ public class GenericObjectControllerIT {
     public void testThatRetrieveReturnsGenericWhenExists() throws Exception {
         final GenericObject genericObject = TestGenericSupplier.getTestGeneric();
         final GenericObject genericObjectSaved = genericService.create(genericObject);
-        final String genericId = genericObjectSaved.getGenericId();
+        final String genericId = genericObjectSaved.getId();
         final GenericDto genericDto = genericToGenericDto(genericObjectSaved);
         final ObjectMapper objectMapper = new ObjectMapper();
         final String genericJson = objectMapper.writeValueAsString(genericDto);
@@ -115,7 +115,7 @@ public class GenericObjectControllerIT {
     @Test
     public void testThatDeleteGenericByIdReturnsHttp204WhenAbsent() throws Exception {
         final GenericObject genericObject = TestGenericSupplier.getTestGeneric();
-        final String genericId = genericObject.getGenericId();
+        final String genericId = genericObject.getId();
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v0/generics/" + genericId))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
@@ -124,7 +124,7 @@ public class GenericObjectControllerIT {
     public void testThatDeleteGenericByIdDeletesGeneric() throws Exception {
         final GenericObject genericObject = TestGenericSupplier.getTestGeneric();
         final GenericObject savedGenericObject = genericService.save(genericObject);
-        final String genericId = savedGenericObject.getGenericId();
+        final String genericId = savedGenericObject.getId();
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v0/generics/" + genericId))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }

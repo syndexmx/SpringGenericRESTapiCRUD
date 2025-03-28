@@ -29,11 +29,11 @@ public class GenericServiceImpl implements GenericService {
 
     @Override
     public GenericObject create(GenericObject genericObject) {
-        String spoofId;
+        UUID spoofId;
         do {
-            spoofId = UUID.randomUUID().toString();
-        } while (genericRepository.existsById(UUID.fromString(spoofId)));
-        genericObject.setGenericId(spoofId);
+            spoofId = UUID.randomUUID();
+        } while (genericRepository.existsById(spoofId));
+        genericObject.setId(spoofId);
         final GenericEntity savedEntity = genericRepository.save(genericToGenericEntity(genericObject));
         final GenericObject savedGenericObject = genericEntityToGeneric(savedEntity);
         return savedGenericObject;
@@ -70,7 +70,7 @@ public class GenericServiceImpl implements GenericService {
 
     @Override
     public boolean isPresent(GenericObject genericObject) {
-        return genericRepository.existsById(UUID.fromString(genericObject.getGenericId()));
+        return genericRepository.existsById(genericObject.getId());
     }
 
     @Override

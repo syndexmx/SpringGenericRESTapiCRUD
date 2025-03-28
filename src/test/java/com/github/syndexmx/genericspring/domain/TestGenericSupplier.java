@@ -12,14 +12,14 @@ public class TestGenericSupplier {
 
     public static GenericObject getTestGeneric( ) {
         return GenericObject.builder()
-                .genericId(id)
+                .id(id)
                 .genericString(genericString)
                 .build();
     }
 
     public static GenericObject getModifiedTestGeneric( ) {
         return GenericObject.builder()
-                .genericId(id)
+                .id(id)
                 .genericString(genericString)
                 .build();
     }
@@ -30,7 +30,7 @@ public class TestGenericSupplier {
 
     public static GenericObject getTestNonExistentGeneric( ) {
         return GenericObject.builder()
-                .genericId(nonExistentUuid)
+                .id(nonExistentUuid)
                 .genericString(nonExistentString)
                 .build();
     }

@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static com.github.syndexmx.genericspring.controllers.mappers.GenericDtoMapper.genericDtoToGeneric;
-import static com.github.syndexmx.genericspring.controllers.mappers.GenericDtoMapper.genericToGenericDto;
+import static com.github.syndexmx.genericspring.controllers.mappers.GenericDtoMapper.*;
 
 @RestController
 public class GenericController {
@@ -28,7 +27,7 @@ public class GenericController {
 
     @PostMapping(ROOT_API_PATH)
     public ResponseEntity<GenericDto> createEntity(@RequestBody final GenericDto genericDto) {
-        final GenericObject genericObject = genericDtoToGeneric(genericDto);
+        final GenericObject genericObject = genericDtoNoIdToGeneric(genericDto);
         final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
                 genericToGenericDto(genericService.create(genericObject)), HttpStatus.CREATED);
         return responseEntity;
