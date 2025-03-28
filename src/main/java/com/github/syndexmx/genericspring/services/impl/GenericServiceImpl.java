@@ -1,7 +1,7 @@
 package com.github.syndexmx.genericspring.services.impl;
 
-import com.github.syndexmx.genericspring.domain.Generic;
-import com.github.syndexmx.genericspring.entities.GenericEntity;
+import com.github.syndexmx.genericspring.domain.GenericObject;
+import com.github.syndexmx.genericspring.repositories.entities.GenericEntity;
 import com.github.syndexmx.genericspring.repositories.GenericRepository;
 import com.github.syndexmx.genericspring.services.GenericService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.github.syndexmx.genericspring.entities.GenericEntity.genericEntityToGeneric;
-import static com.github.syndexmx.genericspring.entities.GenericEntity.genericToGenericEntity;
+import static com.github.syndexmx.genericspring.repositories.mappers.GenericEntityMapper.genericEntityToGeneric;
+import static com.github.syndexmx.genericspring.repositories.mappers.GenericEntityMapper.genericToGenericEntity;
 
 @Service
 @Slf4j
@@ -28,39 +28,39 @@ public class GenericServiceImpl implements GenericService {
     }
 
     @Override
-    public Generic create(Generic generic) {
+    public GenericObject create(GenericObject genericObject) {
         String spoofId;
         do {
             spoofId = UUID.randomUUID().toString();
         } while (genericRepository.existsById(UUID.fromString(spoofId)));
-        generic.setGenericId(spoofId);
-        final GenericEntity savedEntity = genericRepository.save(genericToGenericEntity(generic));
-        final Generic savedGeneric = genericEntityToGeneric(savedEntity);
-        return savedGeneric;
+        genericObject.setGenericId(spoofId);
+        final GenericEntity savedEntity = genericRepository.save(genericToGenericEntity(genericObject));
+        final GenericObject savedGenericObject = genericEntityToGeneric(savedEntity);
+        return savedGenericObject;
     }
 
     @Override
-    public Generic save(Generic generic) {
-        final GenericEntity savedEntity = genericRepository.save(genericToGenericEntity(generic));
-        final Generic savedGeneric = genericEntityToGeneric(savedEntity);
-        return savedGeneric;
+    public GenericObject save(GenericObject genericObject) {
+        final GenericEntity savedEntity = genericRepository.save(genericToGenericEntity(genericObject));
+        final GenericObject savedGenericObject = genericEntityToGeneric(savedEntity);
+        return savedGenericObject;
     }
 
     @Override
-    public Optional<Generic> findById(String genericId) {
+    public Optional<GenericObject> findById(String genericId) {
         final Optional<GenericEntity> genericEntityFound = genericRepository
                 .findById(UUID.fromString(genericId));
-        final Optional<Generic> genericFound = genericEntityFound.map(genericEntity ->
+        final Optional<GenericObject> genericFound = genericEntityFound.map(genericEntity ->
                 genericEntityToGeneric(genericEntity));
         return genericFound;
     }
 
     @Override
-    public List<Generic> listGenerics() {
+    public List<GenericObject> listGenerics() {
         final List<GenericEntity> listOfFoundGenericEntities = genericRepository.findAll();
-        final List<Generic> listOfFoundGenerics =listOfFoundGenericEntities.stream()
+        final List<GenericObject> listOfFoundGenericObjects =listOfFoundGenericEntities.stream()
                 .map(entity -> genericEntityToGeneric(entity)).toList();
-        return listOfFoundGenerics;
+        return listOfFoundGenericObjects;
     }
 
     @Override
@@ -69,8 +69,8 @@ public class GenericServiceImpl implements GenericService {
     }
 
     @Override
-    public boolean isPresent(Generic generic) {
-        return genericRepository.existsById(UUID.fromString(generic.getGenericId()));
+    public boolean isPresent(GenericObject genericObject) {
+        return genericRepository.existsById(UUID.fromString(genericObject.getGenericId()));
     }
 
     @Override

@@ -1,26 +1,25 @@
 package com.github.syndexmx.genericspring.services;
 
-import com.github.syndexmx.genericspring.domain.Generic;
+import com.github.syndexmx.genericspring.domain.GenericObject;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public interface GenericService {
 
-    Generic create(Generic generic);
+    GenericObject create(GenericObject genericObject);
 
-    Generic save(Generic generic);
+    GenericObject save(GenericObject genericObject);
 
-    Optional<Generic> findById(String genericId);
+    Optional<GenericObject> findById(String genericId);
 
-    List<Generic> listGenerics();
+    List<GenericObject> listGenerics();
 
     boolean isPresent(String genericId);
 
-    boolean isPresent(Generic generic);
+    boolean isPresent(GenericObject genericObject);
 
     void deleteGenericById(String genericId);
 
