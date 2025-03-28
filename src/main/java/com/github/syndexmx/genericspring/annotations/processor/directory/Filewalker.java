@@ -19,7 +19,6 @@ public class Filewalker {
             while (line != null) {
                 if (line.indexOf("@TemplatedAnnotation", 0) == 0) {
                     isAnnotated = true;
-                    System.out.println(" @TemplatedAnnotation ");
                     break;
                 }
                 line = bReader.readLine();
@@ -27,7 +26,6 @@ public class Filewalker {
             bReader.close();
             if (isAnnotated) {
                 String classFile = processAnnotatedFile(file);
-                System.out.println(classFile);
                 return Optional.of(classFile);
             }
         } catch (IOException e) {

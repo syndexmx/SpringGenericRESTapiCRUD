@@ -18,15 +18,20 @@ public class AnnotationProcessor {
     }
 
     public static void main(String[] args) {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int returnVal = chooser.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            String chosenDirectory = chooser.getSelectedFile().getAbsolutePath();
-            try {
-                DirectoryWalker walker = new DirectoryWalker("", new File(chosenDirectory));
-                walker.walkOverSubdirectories();
+        JFileChooser sourceDirectoryChooser = new JFileChooser();
+        sourceDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int sourceValue = sourceDirectoryChooser.showOpenDialog(null);
 
+        JFileChooser resultDirectoryChooser = new JFileChooser();
+        resultDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int resultValue = resultDirectoryChooser.showSaveDialog(null);
+
+        if(sourceValue == JFileChooser.APPROVE_OPTION && resultValue == JFileChooser.APPROVE_OPTION) {
+            String sourceDirectory = sourceDirectoryChooser.getSelectedFile().getAbsolutePath();
+            String resultDirectory = resultDirectoryChooser.getSelectedFile().getAbsolutePath();
+            try {
+                DirectoryWalker walker = new DirectoryWalker("", resultDirectory,  new File(sourceDirectory));
+                walker.walkOverSubdirectories();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

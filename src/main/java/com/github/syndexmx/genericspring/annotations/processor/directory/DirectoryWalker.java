@@ -3,21 +3,24 @@ package com.github.syndexmx.genericspring.annotations.processor.directory;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static com.github.syndexmx.genericspring.annotations.processor.directory.Filewalker.processFile;
 
 public class DirectoryWalker {
 
-    String prefix;
-    File directoryName;
+    private String prefix;
+    private String resultPrefix;
+    private File directoryName;
     static final List<String> DIR_IGNORE_LIST = Arrays.asList(".git");
 
     static final List<String> FILES_PROCESSED_LIST = Arrays.asList(".java");
 
 
-    public DirectoryWalker(String prefix, File directoryName) {
+    public DirectoryWalker(String prefix, String resultPrefix, File directoryName) {
         this.prefix = prefix;
         this.directoryName = directoryName;
+        this.resultPrefix = resultPrefix;
     }
 
     public void walkOverSubdirectories() throws Exception {
@@ -28,7 +31,10 @@ public class DirectoryWalker {
                     if (s.equals(cutDirectoryName(file.toString()))) isSkippable = true;
                 }
                 if (!isSkippable) {
-                    DirectoryWalker subWalker = new DirectoryWalker(prefix + "\t", file);
+                    DirectoryWalker subWalker =
+                            new DirectoryWalker(prefix + "\t",
+                                    resultPrefix + File.separator + (file.getName()),
+                                    file);
                     subWalker.walkOverSubdirectories();
                 }
             } else if (file.isFile()) {
@@ -37,8 +43,14 @@ public class DirectoryWalker {
                     if (cutDirectoryName(file.toString()).contains(s)) isProcessedType = true;
                 }
                 if (isProcessedType) {
-                    System.out.println(file.toString());
-                    processFile(file);
+                    Optional<String> optionalResultClass = processFile(file);
+                    if (optionalResultClass.isPresent()) {
+                        String classText = optionalResultClass.get();
+                        String path = StringProcessor.processLine(resultPrefix);
+                        String fileName = StringProcessor.processLine(file.getName());
+                        System.out.println(path + File.separator + fileName);
+                        TargetClassSaver.saveClass(classText, path, fileName);
+                    }
                 }
 
             }
