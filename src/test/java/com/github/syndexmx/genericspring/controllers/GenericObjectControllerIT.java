@@ -2,7 +2,7 @@ package com.github.syndexmx.genericspring.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.syndexmx.genericspring.domain.GenericObject;
-import com.github.syndexmx.genericspring.domain.TestGenericSupplier;
+import com.github.syndexmx.genericspring.domain.GenericObjectTestSupplierKit;
 import com.github.syndexmx.genericspring.controllers.dtos.GenericDto;
 import com.github.syndexmx.genericspring.services.GenericService;
 import org.junit.jupiter.api.Test;
@@ -19,15 +19,18 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static com.github.syndexmx.genericspring.controllers.mappers.GenericDtoMapper.genericToGenericDto;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class GenericObjectControllerIT {
+
+    private final String ROOT_API_PATH = "/api/v0/generics";
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,33 +40,33 @@ public class GenericObjectControllerIT {
 
     @Test
     public void testThatGenericIsCreated() throws Exception {
-        final GenericObject genericObject = TestGenericSupplier.getTestGeneric();
+        GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
         final GenericDto genericDto = genericToGenericDto(genericObject);
-        final ObjectMapper objectMappper = new ObjectMapper();
-        final String genericJson = objectMappper.writeValueAsString(genericDto);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v0/generics")
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final String genericJson = objectMapper.writeValueAsString(genericDto);
+        mockMvc.perform(MockMvcRequestBuilders.post(ROOT_API_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                         .content(genericJson))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().json(genericJson));
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+        List<GenericObject> savedGenericList = genericService.listGenerics();
+        assertEquals(1, savedGenericList.size());
+        GenericObject savedGeneric = savedGenericList.get(0);
+        final UUID id = savedGeneric.getId();
+        genericObject.setId(id);
+        assertEquals(genericObject, savedGeneric);
     }
 
     @Test
     public void testThatGenericIsUpdated() throws Exception {
-        final GenericObject genericObject = TestGenericSupplier.getTestGeneric();
-        final GenericDto genericDto = genericToGenericDto(genericObject);
-        final ObjectMapper objectMappper = new ObjectMapper();
-        final String genericJson = objectMappper.writeValueAsString(genericDto);
-        final GenericObject modifiedGenericObject = TestGenericSupplier.getModifiedTestGeneric();
+        final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
+        GenericObject savedGeneric = genericService.create(genericObject);
+        final UUID id = savedGeneric.getId();
+        GenericObject modifiedGenericObject = GenericObjectTestSupplierKit.getModifiedTestGeneric();
+        modifiedGenericObject.setId(id);
         final GenericDto modifiedGenericDto = genericToGenericDto(modifiedGenericObject);
         final ObjectMapper modifiedObjectMapper = new ObjectMapper();
         final String modifiedGenericJson = modifiedObjectMapper.writeValueAsString(modifiedGenericDto);
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/v0/generics")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(genericJson))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().json(genericJson));
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/v0/generics")
+        mockMvc.perform(MockMvcRequestBuilders.put(ROOT_API_PATH + "/" + id.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(modifiedGenericJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -72,41 +75,41 @@ public class GenericObjectControllerIT {
 
     @Test
     public void testThatRetrieveReturnsNotFoundWhenAbsent() throws Exception {
-        final GenericObject genericObject = TestGenericSupplier.getTestNonExistentGeneric();
-        final String genericId = genericObject.getId();
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v0/generics/" + genericId))
+        final GenericObject genericObject = GenericObjectTestSupplierKit.getTestNonExistentGeneric();
+        final UUID id = genericObject.getId();
+        mockMvc.perform(MockMvcRequestBuilders.get(ROOT_API_PATH + "/" + id.toString()))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
     public void testThatRetrieveReturnsGenericWhenExists() throws Exception {
-        final GenericObject genericObject = TestGenericSupplier.getTestGeneric();
+        final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
         final GenericObject genericObjectSaved = genericService.create(genericObject);
-        final String genericId = genericObjectSaved.getId();
+        final UUID id = genericObjectSaved.getId();
         final GenericDto genericDto = genericToGenericDto(genericObjectSaved);
         final ObjectMapper objectMapper = new ObjectMapper();
         final String genericJson = objectMapper.writeValueAsString(genericDto);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v0/generics/" + genericId))
+        mockMvc.perform(MockMvcRequestBuilders.get(ROOT_API_PATH + "/" + id.toString()))
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.content().json(genericJson));
     }
 
     @Test
     public void testThatRetrieveAllReturnsEmptyWhenAbsent() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v0/generics"))
+        mockMvc.perform(MockMvcRequestBuilders.get(ROOT_API_PATH))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
     @Test
     public void testThatRetrieveAllReturnsListWhenExist() throws Exception {
-        final GenericObject genericObject = TestGenericSupplier.getTestGeneric();
+        final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
         final GenericObject genericObjectSaved = genericService.create(genericObject);
         final GenericDto genericDto = genericToGenericDto(genericObjectSaved);
         final List<GenericDto> listGenericDto = new ArrayList<>(List.of(genericDto));
         final ObjectMapper objectMapper = new ObjectMapper();
         final String genericListJson = objectMapper.writeValueAsString(listGenericDto);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v0/generics"))
+        mockMvc.perform(MockMvcRequestBuilders.get(ROOT_API_PATH))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(genericListJson));
 
@@ -114,18 +117,18 @@ public class GenericObjectControllerIT {
 
     @Test
     public void testThatDeleteGenericByIdReturnsHttp204WhenAbsent() throws Exception {
-        final GenericObject genericObject = TestGenericSupplier.getTestGeneric();
-        final String genericId = genericObject.getId();
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v0/generics/" + genericId))
+        final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
+        final UUID id = genericObject.getId();
+        mockMvc.perform(MockMvcRequestBuilders.delete(ROOT_API_PATH + "/" + id.toString()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
     @Test
     public void testThatDeleteGenericByIdDeletesGeneric() throws Exception {
-        final GenericObject genericObject = TestGenericSupplier.getTestGeneric();
+        final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
         final GenericObject savedGenericObject = genericService.save(genericObject);
-        final String genericId = savedGenericObject.getId();
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v0/generics/" + genericId))
+        final UUID id = savedGenericObject.getId();
+        mockMvc.perform(MockMvcRequestBuilders.delete(ROOT_API_PATH + "/" + id))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 }
