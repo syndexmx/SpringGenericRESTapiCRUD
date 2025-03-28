@@ -50,7 +50,7 @@ public class GenericObjectControllerIT {
                 .contentType(MediaType.APPLICATION_JSON)
                         .content(genericJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
-        List<GenericObject> savedGenericList = genericService.listGenerics();
+        List<GenericObject> savedGenericList = genericService.listAll();
         assertEquals(1, savedGenericList.size());
         GenericObject savedGeneric = savedGenericList.get(0);
         final UUID id = savedGeneric.getId();
