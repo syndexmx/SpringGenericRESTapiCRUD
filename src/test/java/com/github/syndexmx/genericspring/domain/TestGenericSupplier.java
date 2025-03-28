@@ -10,16 +10,16 @@ public class TestGenericSupplier {
 
     private static String genericStringModified = "Modified Test String";
 
-    public static Generic getTestGeneric( ) {
-        return Generic.builder()
-                .genericId(id)
+    public static GenericObject getTestGeneric( ) {
+        return GenericObject.builder()
+                .id(id)
                 .genericString(genericString)
                 .build();
     }
 
-    public static Generic getModifiedTestGeneric( ) {
-        return Generic.builder()
-                .genericId(id)
+    public static GenericObject getModifiedTestGeneric( ) {
+        return GenericObject.builder()
+                .id(id)
                 .genericString(genericString)
                 .build();
     }
@@ -28,9 +28,9 @@ public class TestGenericSupplier {
 
     private static String nonExistentString = "non existent String";
 
-    public static Generic getTestNonExistentGeneric( ) {
-        return Generic.builder()
-                .genericId(nonExistentUuid)
+    public static GenericObject getTestNonExistentGeneric( ) {
+        return GenericObject.builder()
+                .id(nonExistentUuid)
                 .genericString(nonExistentString)
                 .build();
     }

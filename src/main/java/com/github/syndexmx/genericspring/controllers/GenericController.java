@@ -1,7 +1,7 @@
 package com.github.syndexmx.genericspring.controllers;
 
-import com.github.syndexmx.genericspring.domain.Generic;
-import com.github.syndexmx.genericspring.dtos.GenericDto;
+import com.github.syndexmx.genericspring.domain.GenericObject;
+import com.github.syndexmx.genericspring.controllers.dtos.GenericDto;
 import com.github.syndexmx.genericspring.services.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-import static com.github.syndexmx.genericspring.dtos.GenericDto.genericDtoToGeneric;
-import static com.github.syndexmx.genericspring.dtos.GenericDto.genericToGenericDto;
+import static com.github.syndexmx.genericspring.controllers.mappers.GenericDtoMapper.*;
 
 @RestController
 public class GenericController {
+
+    private final String ROOT_API_PATH = "/api/v0/generics";
 
     private final GenericService genericService;
 
@@ -25,17 +25,17 @@ public class GenericController {
         this.genericService = genericService;
     }
 
-    @PostMapping("/api/v0/generics")
+    @PostMapping(ROOT_API_PATH)
     public ResponseEntity<GenericDto> createEntity(@RequestBody final GenericDto genericDto) {
-        final Generic generic = genericDtoToGeneric(genericDto);
+        final GenericObject genericObject = genericDtoNoIdToGeneric(genericDto);
         final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
-                genericToGenericDto(genericService.create(generic)), HttpStatus.CREATED);
+                genericToGenericDto(genericService.create(genericObject)), HttpStatus.CREATED);
         return responseEntity;
     }
 
-    @GetMapping("/api/v0/generics/{genericId}")
+    @GetMapping(ROOT_API_PATH +"/{genericId}")
     public ResponseEntity<GenericDto> retrieveGeneric(@PathVariable String genericId) {
-        final Optional<Generic> foundGeneric = genericService.findById(genericId);
+        final Optional<GenericObject> foundGeneric = genericService.findById(genericId);
         if (foundGeneric.isEmpty()) {
             return new ResponseEntity<GenericDto>(HttpStatus.NOT_FOUND);
         } else {
@@ -44,30 +44,30 @@ public class GenericController {
         }
     }
 
-    @GetMapping("/api/v0/generics")
-    public ResponseEntity<List<GenericDto>> retrieveAllGenerics() {
-        final List<Generic> listFoundGenerics = genericService.listGenerics();
-        final List<GenericDto> listFoundGenericDtos = listFoundGenerics.stream()
+    @GetMapping(ROOT_API_PATH)
+    public ResponseEntity<List<GenericDto>> retrieveAll() {
+        final List<GenericObject> listFound = genericService.listGenerics();
+        final List<GenericDto> listFoundDtos = listFound.stream()
                 .map(generic -> genericToGenericDto(generic)).toList();
-        final ResponseEntity<List<GenericDto>> response = new ResponseEntity<>(listFoundGenericDtos,
+        final ResponseEntity<List<GenericDto>> response = new ResponseEntity<>(listFoundDtos,
                 HttpStatus.OK);
         return response;
     }
 
-    @PutMapping("/api/v0/generics")
+    @PutMapping(ROOT_API_PATH +"/{genericId}")
     public ResponseEntity<GenericDto> updateEntity(@RequestBody final GenericDto genericDto) {
-        final Generic generic = genericDtoToGeneric(genericDto);
-        if (!genericService.isPresent(generic)) {
+        final GenericObject genericObject = genericDtoToGeneric(genericDto);
+        if (!genericService.isPresent(genericObject)) {
             final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
-                    genericToGenericDto(genericService.save(generic)), HttpStatus.CREATED);
+                    genericToGenericDto(genericService.save(genericObject)), HttpStatus.CREATED);
             return responseEntity;
         }
         final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
-                genericToGenericDto(genericService.save(generic)), HttpStatus.OK);
+                genericToGenericDto(genericService.save(genericObject)), HttpStatus.OK);
         return responseEntity;
     }
 
-    @DeleteMapping("/api/v0/generics/{genericId}")
+    @DeleteMapping(ROOT_API_PATH +"/{genericId}")
     public ResponseEntity deleteGenericById(@PathVariable String genericId) {
         genericService.deleteGenericById(genericId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
