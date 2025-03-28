@@ -17,6 +17,6 @@ public class GenericObject {
 
     private UUID id;
 
-    private String genericFieldContent;
+    private GenericFields genericFieldContent;
 
 }

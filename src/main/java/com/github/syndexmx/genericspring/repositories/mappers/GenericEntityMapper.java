@@ -1,6 +1,7 @@
 package com.github.syndexmx.genericspring.repositories.mappers;
 
 import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
+import com.github.syndexmx.genericspring.domain.GenericFields;
 import com.github.syndexmx.genericspring.domain.GenericObject;
 import com.github.syndexmx.genericspring.repositories.entities.GenericEntity;
 
@@ -10,7 +11,7 @@ public class GenericEntityMapper {
     public static GenericEntity genericToGenericEntity(GenericObject genericObject) {
         final GenericEntity genericEntity = GenericEntity.builder()
                 .genericId(genericObject.getId())
-                .genericFieldContent(genericObject.getGenericFieldContent())
+                .genericFieldContent(genericObject.getGenericFieldContent().toString())
                 .build();
         return genericEntity;
     }
@@ -18,7 +19,7 @@ public class GenericEntityMapper {
     public static GenericObject genericEntityToGeneric(GenericEntity genericEntity) {
         GenericObject genericObject = GenericObject.builder()
                 .id(genericEntity.getGenericId())
-                .genericFieldContent(genericEntity.getGenericFieldContent())
+                .genericFieldContent(GenericFields.valueOf(genericEntity.getGenericFieldContent()))
                 .build();
         return genericObject;
 

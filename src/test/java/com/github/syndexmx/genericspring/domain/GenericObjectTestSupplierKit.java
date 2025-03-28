@@ -9,13 +9,13 @@ public class GenericObjectTestSupplierKit {
 
     private static UUID id = UUID.randomUUID();
 
-    private static String GENERIC_STRING = "Test String";
-    private static String GENERIC_STRING_MODIFIED = "Modified Test String";
+    private static GenericFields GENERIC_FIELD_VALUE = GenericFields.DEFAULTVALUE;
+    private static GenericFields GENERIC_STRING_MODIFIED = GenericFields.ALTERNATIVEVALUE;
 
     public static GenericObject getTestGeneric( ) {
         return GenericObject.builder()
                 .id(id)
-                .genericFieldContent(GENERIC_STRING)
+                .genericFieldContent(GENERIC_FIELD_VALUE)
                 .build();
     }
 
@@ -32,7 +32,7 @@ public class GenericObjectTestSupplierKit {
     public static GenericObject getTestNonExistentGeneric( ) {
         return GenericObject.builder()
                 .id(NON_EXISTENT_UUID)
-                .genericFieldContent(NON_EXISTANT_STRING)
+                .genericFieldContent(GenericFields.OTHERVALUE)
                 .build();
     }
 
