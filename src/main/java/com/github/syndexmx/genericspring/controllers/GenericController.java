@@ -28,7 +28,7 @@ public class GenericController {
     }
 
     @PostMapping(ROOT_API_PATH)
-    public ResponseEntity<GenericDto> createEntity(@RequestBody final GenericDto genericDto) {
+    public ResponseEntity<GenericDto> create(@RequestBody final GenericDto genericDto) {
         final GenericObject genericObject = genericDtoNoIdToGeneric(genericDto);
         final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
                 genericToGenericDto(genericService.create(genericObject)), HttpStatus.CREATED);
@@ -36,7 +36,7 @@ public class GenericController {
     }
 
     @GetMapping(ROOT_API_PATH +"/{genericId}")
-    public ResponseEntity<GenericDto> retrieveGeneric(@PathVariable String genericId) {
+    public ResponseEntity<GenericDto> retrieve(@PathVariable String genericId) {
         final Optional<GenericObject> foundGeneric = genericService.findById(genericId);
         if (foundGeneric.isEmpty()) {
             return new ResponseEntity<GenericDto>(HttpStatus.NOT_FOUND);
@@ -57,7 +57,7 @@ public class GenericController {
     }
 
     @PutMapping(ROOT_API_PATH +"/{genericId}")
-    public ResponseEntity<GenericDto> updateEntity(@RequestBody final GenericDto genericDto) {
+    public ResponseEntity<GenericDto> update(@RequestBody final GenericDto genericDto) {
         final GenericObject genericObject = genericDtoToGeneric(genericDto);
         if (!genericService.isPresent(genericObject)) {
             final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
@@ -70,7 +70,7 @@ public class GenericController {
     }
 
     @DeleteMapping(ROOT_API_PATH +"/{genericId}")
-    public ResponseEntity deleteGenericById(@PathVariable String genericId) {
+    public ResponseEntity deleteById(@PathVariable String genericId) {
         genericService.deleteGenericById(genericId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
