@@ -10,7 +10,7 @@ public class GenericDtoMapper {
     public static GenericDto genericToGenericDto(GenericObject genericObject) {
         final GenericDto genericDto = GenericDto.builder()
                 .id(genericObject.getId().toString())
-                .genericString(genericObject.getGenericString())
+                .genericFieldContent(genericObject.getGenericFieldContent())
                 .build();
         return genericDto;
     }
@@ -18,7 +18,7 @@ public class GenericDtoMapper {
     public static GenericObject genericDtoToGeneric(GenericDto genericDto) {
         GenericObject genericObject = GenericObject.builder()
                 .id(UUID.fromString(genericDto.getId()))
-                .genericString(genericDto.getGenericString())
+                .genericFieldContent(genericDto.getGenericFieldContent())
                 .build();
         return genericObject;
     }
@@ -26,7 +26,7 @@ public class GenericDtoMapper {
     public static GenericObject genericDtoNoIdToGeneric(GenericDto genericDto) {
         GenericObject genericObject = GenericObject.builder()
                 .id(UUID.randomUUID())
-                .genericString(genericDto.getGenericString())
+                .genericFieldContent(genericDto.getGenericFieldContent())
                 .build();
         return genericObject;
     }

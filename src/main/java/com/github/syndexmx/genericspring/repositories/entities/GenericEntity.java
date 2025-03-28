@@ -1,7 +1,5 @@
 package com.github.syndexmx.genericspring.repositories.entities;
 
-import com.github.syndexmx.genericspring.domain.GenericObject;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -23,7 +21,7 @@ public class GenericEntity {
     @Id
     private UUID genericId;
 
-    private String genericString;
+    private String genericFieldContent;
 
 
 }
