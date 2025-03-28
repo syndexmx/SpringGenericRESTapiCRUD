@@ -1,6 +1,7 @@
 package com.github.syndexmx.genericspring.services.impl;
 
 
+import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import com.github.syndexmx.genericspring.domain.GenericObject;
 import com.github.syndexmx.genericspring.domain.GenericObjectTestSupplierKit;
 import com.github.syndexmx.genericspring.repositories.entities.GenericEntity;
@@ -23,6 +24,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@TemplatedAnnotation
 @ExtendWith(MockitoExtension.class)
 public class GenericObjectServiceImplTest {
 
