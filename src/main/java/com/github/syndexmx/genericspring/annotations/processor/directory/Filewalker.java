@@ -17,7 +17,7 @@ public class Filewalker {
             String line = bReader.readLine();
             boolean isAnnotated = false;
             while (line != null) {
-                if (line.indexOf("@TemplatedAnnotation", 0) == 0) {
+                if (line.contains("@TemplatedAnnotation")) {
                     isAnnotated = true;
                     break;
                 }
