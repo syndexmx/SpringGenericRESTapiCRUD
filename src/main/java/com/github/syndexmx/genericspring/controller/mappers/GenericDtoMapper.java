@@ -1,16 +1,18 @@
-package com.github.syndexmx.genericspring.controllers.mappers;
+package com.github.syndexmx.genericspring.controller.mappers;
 
 import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
-import com.github.syndexmx.genericspring.controllers.dtos.GenericDto;
+import com.github.syndexmx.genericspring.controller.dtos.GenericDto;
 import com.github.syndexmx.genericspring.domain.GenericFields;
 import com.github.syndexmx.genericspring.domain.GenericObject;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @TemplatedAnnotation
+@Component
 public class GenericDtoMapper {
 
-    public static GenericDto genericToGenericDto(GenericObject genericObject) {
+    public GenericDto genericToGenericDto(GenericObject genericObject) {
         final GenericDto genericDto = GenericDto.builder()
                 .id(genericObject.getId().toString())
                 .genericFieldContent(genericObject.getGenericFields().toString())
@@ -18,7 +20,7 @@ public class GenericDtoMapper {
         return genericDto;
     }
 
-    public static GenericObject genericDtoToGeneric(GenericDto genericDto) {
+    public GenericObject genericDtoToGeneric(GenericDto genericDto) {
         GenericObject genericObject = GenericObject.builder()
                 .id(UUID.fromString(genericDto.getId()))
                 .genericFields(GenericFields.valueOf(genericDto.getGenericFieldContent()))
@@ -26,7 +28,7 @@ public class GenericDtoMapper {
         return genericObject;
     }
 
-    public static GenericObject genericDtoNoIdToGeneric(GenericDto genericDto) {
+    public GenericObject genericDtoNoIdToGeneric(GenericDto genericDto) {
         GenericObject genericObject = GenericObject.builder()
                 .id(UUID.randomUUID())
                 .genericFields(GenericFields.valueOf(genericDto.getGenericFieldContent()))

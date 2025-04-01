@@ -1,27 +1,26 @@
 package com.github.syndexmx.genericspring.services.impl;
 
-
 import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import com.github.syndexmx.genericspring.domain.GenericObject;
 import com.github.syndexmx.genericspring.domain.GenericObjectTestSupplierKit;
-import com.github.syndexmx.genericspring.repositories.entities.GenericEntity;
-import com.github.syndexmx.genericspring.repositories.GenericRepository;
+import com.github.syndexmx.genericspring.repository.entities.GenericEntity;
+import com.github.syndexmx.genericspring.repository.mappers.GenericEntityMapper;
+import com.github.syndexmx.genericspring.repository.repositories.GenericRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.github.syndexmx.genericspring.repositories.mappers.GenericEntityMapper.genericToGenericEntity;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.Mockito.*;
 
 @TemplatedAnnotation
@@ -34,10 +33,13 @@ public class GenericObjectServiceImplTest {
     @InjectMocks
     private GenericServiceImpl underTest;
 
+    @Autowired
+    private GenericEntityMapper genericEntityMapper;
+
     @Test
     public void testThatGenericIsCreated() {
         GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        GenericEntity genericEntity = genericToGenericEntity(genericObject);
+        GenericEntity genericEntity = genericEntityMapper.genericToGenericEntity(genericObject);
         when(genericRepository.save(any())).thenReturn(genericEntity);
         final GenericObject savedGenericObject = underTest.create(genericObject);
         genericObject.setId(savedGenericObject.getId());
@@ -47,7 +49,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatGenericIsSaved() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final GenericEntity genericEntity = genericToGenericEntity(genericObject);
+        final GenericEntity genericEntity = genericEntityMapper.genericToGenericEntity(genericObject);
         when(genericRepository.save(eq(genericEntity))).thenReturn(genericEntity);
         final GenericObject savedGenericObject = underTest.save(genericObject);
         assertEquals(genericObject, savedGenericObject);
@@ -65,7 +67,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatFindByIdReturnsEntityWhenPresent() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final GenericEntity genericEntity = genericToGenericEntity(genericObject);
+        final GenericEntity genericEntity = genericEntityMapper.genericToGenericEntity(genericObject);
         final String idString = genericObject.getId().toString();
         when(genericRepository.findById(eq(UUID.fromString(idString)))).thenReturn(Optional.of(genericEntity));
         final Optional<GenericObject> foundGeneric = underTest.findById(idString);
@@ -82,7 +84,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testListGenericsReturnsListWhenExist() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final GenericEntity genericEntity = genericToGenericEntity(genericObject);
+        final GenericEntity genericEntity = genericEntityMapper.genericToGenericEntity(genericObject);
         List<GenericEntity> listOfExisting = new ArrayList<>(List.of(genericEntity));
         when(genericRepository.findAll()).thenReturn(listOfExisting);
         final List<GenericObject> result = underTest.listAll();

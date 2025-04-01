@@ -1,4 +1,4 @@
-package com.github.syndexmx.genericspring.repositories.entities;
+package com.github.syndexmx.genericspring.repository.entities;
 
 import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import jakarta.persistence.*;
