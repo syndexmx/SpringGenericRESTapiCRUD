@@ -1,4 +1,4 @@
-package com.github.syndexmx.genericspring.controllers.dtos;
+package com.github.syndexmx.genericspring.controller.dtos;
 
 import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import lombok.AllArgsConstructor;
@@ -16,6 +16,5 @@ public class GenericDto {
     private String id;
 
     private String genericFieldContent;
-
 
 }

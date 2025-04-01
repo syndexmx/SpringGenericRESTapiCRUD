@@ -1,10 +1,11 @@
-package com.github.syndexmx.genericspring.controllers;
+package com.github.syndexmx.genericspring.controller.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
+import com.github.syndexmx.genericspring.controller.mappers.GenericDtoMapper;
 import com.github.syndexmx.genericspring.domain.GenericObject;
 import com.github.syndexmx.genericspring.domain.GenericObjectTestSupplierKit;
-import com.github.syndexmx.genericspring.controllers.dtos.GenericDto;
+import com.github.syndexmx.genericspring.controller.dtos.GenericDto;
 import com.github.syndexmx.genericspring.services.GenericService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static com.github.syndexmx.genericspring.controllers.mappers.GenericDtoMapper.genericToGenericDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TemplatedAnnotation
@@ -40,10 +40,13 @@ public class GenericObjectControllerIT {
     @Autowired
     private GenericService genericService;
 
+    @Autowired
+    private GenericDtoMapper genericDtoMapper;
+
     @Test
     public void testThatGenericIsCreated() throws Exception {
         GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final GenericDto genericDto = genericToGenericDto(genericObject);
+        final GenericDto genericDto = genericDtoMapper.genericToGenericDto(genericObject);
         final ObjectMapper objectMapper = new ObjectMapper();
         final String genericJson = objectMapper.writeValueAsString(genericDto);
         mockMvc.perform(MockMvcRequestBuilders.post(ROOT_API_PATH)
@@ -65,7 +68,7 @@ public class GenericObjectControllerIT {
         final UUID id = savedGeneric.getId();
         GenericObject modifiedGenericObject = GenericObjectTestSupplierKit.getModifiedTestGeneric();
         modifiedGenericObject.setId(id);
-        final GenericDto modifiedGenericDto = genericToGenericDto(modifiedGenericObject);
+        final GenericDto modifiedGenericDto = genericDtoMapper.genericToGenericDto(modifiedGenericObject);
         final ObjectMapper modifiedObjectMapper = new ObjectMapper();
         final String modifiedGenericJson = modifiedObjectMapper.writeValueAsString(modifiedGenericDto);
         mockMvc.perform(MockMvcRequestBuilders.put(ROOT_API_PATH + "/" + id.toString())
@@ -88,7 +91,7 @@ public class GenericObjectControllerIT {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
         final GenericObject genericObjectSaved = genericService.create(genericObject);
         final UUID id = genericObjectSaved.getId();
-        final GenericDto genericDto = genericToGenericDto(genericObjectSaved);
+        final GenericDto genericDto = genericDtoMapper.genericToGenericDto(genericObjectSaved);
         final ObjectMapper objectMapper = new ObjectMapper();
         final String genericJson = objectMapper.writeValueAsString(genericDto);
         mockMvc.perform(MockMvcRequestBuilders.get(ROOT_API_PATH + "/" + id.toString()))
@@ -107,7 +110,7 @@ public class GenericObjectControllerIT {
     public void testThatRetrieveAllReturnsListWhenExist() throws Exception {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
         final GenericObject genericObjectSaved = genericService.create(genericObject);
-        final GenericDto genericDto = genericToGenericDto(genericObjectSaved);
+        final GenericDto genericDto = genericDtoMapper.genericToGenericDto(genericObjectSaved);
         final List<GenericDto> listGenericDto = new ArrayList<>(List.of(genericDto));
         final ObjectMapper objectMapper = new ObjectMapper();
         final String genericListJson = objectMapper.writeValueAsString(listGenericDto);
