@@ -12,14 +12,14 @@ public class GenericObjectTestSupplierKit {
     private static GenericFields GENERIC_FIELD_VALUE = GenericFields.DEFAULTVALUE;
     private static GenericFields GENERIC_STRING_MODIFIED = GenericFields.ALTERNATIVEVALUE;
 
-    public static GenericObject getTestGeneric( ) {
+    public static GenericObject getTestGeneric() {
         return GenericObject.builder()
                 .id(id)
                 .genericFields(GENERIC_FIELD_VALUE)
                 .build();
     }
 
-    public static GenericObject getModifiedTestGeneric( ) {
+    public static GenericObject getModifiedTestGeneric() {
         return GenericObject.builder()
                 .id(id)
                 .genericFields(GENERIC_STRING_MODIFIED)
