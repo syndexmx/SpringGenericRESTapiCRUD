@@ -11,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +32,10 @@ public class GenericObjectServiceImplTest {
     @InjectMocks
     private GenericServiceImpl underTest;
 
-    @Autowired
-    private GenericEntityMapper genericEntityMapper;
-
     @Test
     public void testThatGenericIsCreated() {
         GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
+        GenericEntityMapper genericEntityMapper = new GenericEntityMapper(); // TO DO: make it work
         GenericEntity genericEntity = genericEntityMapper.genericToGenericEntity(genericObject);
         when(genericRepository.save(any())).thenReturn(genericEntity);
         final GenericObject savedGenericObject = underTest.create(genericObject);
@@ -49,6 +46,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatGenericIsSaved() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
+        GenericEntityMapper genericEntityMapper = new GenericEntityMapper(); // TO DO: make it work
         final GenericEntity genericEntity = genericEntityMapper.genericToGenericEntity(genericObject);
         when(genericRepository.save(eq(genericEntity))).thenReturn(genericEntity);
         final GenericObject savedGenericObject = underTest.save(genericObject);
@@ -67,6 +65,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatFindByIdReturnsEntityWhenPresent() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
+        GenericEntityMapper genericEntityMapper = new GenericEntityMapper(); // TO DO: make it work
         final GenericEntity genericEntity = genericEntityMapper.genericToGenericEntity(genericObject);
         final String idString = genericObject.getId().toString();
         when(genericRepository.findById(eq(UUID.fromString(idString)))).thenReturn(Optional.of(genericEntity));
@@ -84,6 +83,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testListGenericsReturnsListWhenExist() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
+        GenericEntityMapper genericEntityMapper = new GenericEntityMapper(); // TO DO: make it work
         final GenericEntity genericEntity = genericEntityMapper.genericToGenericEntity(genericObject);
         List<GenericEntity> listOfExisting = new ArrayList<>(List.of(genericEntity));
         when(genericRepository.findAll()).thenReturn(listOfExisting);
