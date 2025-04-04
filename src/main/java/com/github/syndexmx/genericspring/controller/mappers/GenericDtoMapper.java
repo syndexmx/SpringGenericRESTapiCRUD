@@ -12,7 +12,7 @@ import java.util.UUID;
 @Component
 public class GenericDtoMapper {
 
-    public GenericDto genericToGenericDto(GenericObject genericObject) {
+    public static GenericDto genericToGenericDto(GenericObject genericObject) {
         final GenericDto genericDto = GenericDto.builder()
                 .id(genericObject.getId().toString())
                 .genericFieldContent(genericObject.getGenericFields().toString())
@@ -20,7 +20,7 @@ public class GenericDtoMapper {
         return genericDto;
     }
 
-    public GenericObject genericDtoToGeneric(GenericDto genericDto) {
+    public static GenericObject genericDtoToGeneric(GenericDto genericDto) {
         GenericObject genericObject = GenericObject.builder()
                 .id(UUID.fromString(genericDto.getId()))
                 .genericFields(GenericFields.valueOf(genericDto.getGenericFieldContent()))
