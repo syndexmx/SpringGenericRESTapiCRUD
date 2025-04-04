@@ -21,29 +21,27 @@ import java.util.UUID;
 public class GenericServiceImpl implements GenericService {
 
     private final GenericRepository genericRepository;
-    private final GenericEntityMapper genericEntityMapper;
 
     @Autowired
     private GenericServiceImpl(GenericRepository genericRepository, GenericEntityMapper genericEntityMapper) {
         this.genericRepository = genericRepository;
-        this.genericEntityMapper = genericEntityMapper;
     }
 
     @Override
     public GenericObject create(GenericObject genericObject) {
         UUID spoofId = UUID.randomUUID();
         genericObject.setId(spoofId);
-        final GenericEntity savedEntity = genericRepository.save(genericEntityMapper
+        final GenericEntity savedEntity = genericRepository.save(GenericEntityMapper
                 .genericToGenericEntity(genericObject));
-        final GenericObject savedGenericObject = genericEntityMapper.genericEntityToGeneric(savedEntity);
+        final GenericObject savedGenericObject = GenericEntityMapper.genericEntityToGeneric(savedEntity);
         return savedGenericObject;
     }
 
     @Override
     public GenericObject save(GenericObject genericObject) {
-        final GenericEntity savedEntity = genericRepository.save(genericEntityMapper
+        final GenericEntity savedEntity = genericRepository.save(GenericEntityMapper
                 .genericToGenericEntity(genericObject));
-        final GenericObject savedGenericObject = genericEntityMapper.genericEntityToGeneric(savedEntity);
+        final GenericObject savedGenericObject = GenericEntityMapper.genericEntityToGeneric(savedEntity);
         return savedGenericObject;
     }
 
@@ -52,7 +50,7 @@ public class GenericServiceImpl implements GenericService {
         final Optional<GenericEntity> genericEntityFound = genericRepository
                 .findById(UUID.fromString(genericId));
         final Optional<GenericObject> genericFound = genericEntityFound.map(genericEntity ->
-                genericEntityMapper.genericEntityToGeneric(genericEntity));
+                GenericEntityMapper.genericEntityToGeneric(genericEntity));
         return genericFound;
     }
 
@@ -60,7 +58,7 @@ public class GenericServiceImpl implements GenericService {
     public List<GenericObject> listAll() {
         final List<GenericEntity> listOfFoundGenericEntities = genericRepository.findAll();
         final List<GenericObject> listOfFoundGenericObjects =listOfFoundGenericEntities.stream()
-                .map(entity -> genericEntityMapper.genericEntityToGeneric(entity)).toList();
+                .map(entity -> GenericEntityMapper.genericEntityToGeneric(entity)).toList();
         return listOfFoundGenericObjects;
     }
 

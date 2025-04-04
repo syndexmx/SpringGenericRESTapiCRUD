@@ -20,19 +20,17 @@ public class GenericController {
     private final String ROOT_API_PATH = "/api/v0/generics";
 
     private final GenericService genericService;
-    private final GenericDtoMapper genericDtoMapper;
 
     @Autowired
     private GenericController(GenericService genericService, GenericDtoMapper genericDtoMapper) {
         this.genericService = genericService;
-        this.genericDtoMapper = genericDtoMapper;
     }
 
     @PostMapping(ROOT_API_PATH)
     public ResponseEntity<GenericDto> create(@RequestBody final GenericDto genericDto) {
-        final GenericObject genericObject = genericDtoMapper.genericDtoNoIdToGeneric(genericDto);
+        final GenericObject genericObject = GenericDtoMapper.genericDtoNoIdToGeneric(genericDto);
         final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
-                genericDtoMapper.genericToGenericDto(genericService.create(genericObject)), HttpStatus.CREATED);
+                GenericDtoMapper.genericToGenericDto(genericService.create(genericObject)), HttpStatus.CREATED);
         return responseEntity;
     }
 
@@ -42,7 +40,7 @@ public class GenericController {
         if (foundGeneric.isEmpty()) {
             return new ResponseEntity<GenericDto>(HttpStatus.NOT_FOUND);
         } else {
-            final GenericDto genericDto = genericDtoMapper.genericToGenericDto(foundGeneric.get());
+            final GenericDto genericDto = GenericDtoMapper.genericToGenericDto(foundGeneric.get());
             return new ResponseEntity<GenericDto>(genericDto, HttpStatus.FOUND);
         }
     }
@@ -51,7 +49,7 @@ public class GenericController {
     public ResponseEntity<List<GenericDto>> retrieveAll() {
         final List<GenericObject> listFound = genericService.listAll();
         final List<GenericDto> listFoundDtos = listFound.stream()
-                .map(generic -> genericDtoMapper.genericToGenericDto(generic)).toList();
+                .map(generic -> GenericDtoMapper.genericToGenericDto(generic)).toList();
         final ResponseEntity<List<GenericDto>> response = new ResponseEntity<>(listFoundDtos,
                 HttpStatus.OK);
         return response;
@@ -59,14 +57,14 @@ public class GenericController {
 
     @PutMapping(ROOT_API_PATH +"/{genericId}")
     public ResponseEntity<GenericDto> update(@RequestBody final GenericDto genericDto) {
-        final GenericObject genericObject = genericDtoMapper.genericDtoToGeneric(genericDto);
+        final GenericObject genericObject = GenericDtoMapper.genericDtoToGeneric(genericDto);
         if (!genericService.isPresent(genericObject)) {
             final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
-                    genericDtoMapper.genericToGenericDto(genericService.save(genericObject)), HttpStatus.CREATED);
+                    GenericDtoMapper.genericToGenericDto(genericService.save(genericObject)), HttpStatus.CREATED);
             return responseEntity;
         }
         final ResponseEntity<GenericDto> responseEntity = new ResponseEntity<> (
-                genericDtoMapper.genericToGenericDto(genericService.save(genericObject)), HttpStatus.OK);
+                GenericDtoMapper.genericToGenericDto(genericService.save(genericObject)), HttpStatus.OK);
         return responseEntity;
     }
 
