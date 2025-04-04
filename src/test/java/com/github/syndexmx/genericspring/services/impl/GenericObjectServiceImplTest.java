@@ -63,7 +63,6 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatFindByIdReturnsEntityWhenPresent() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        //GenericEntityMapper genericEntityMapper = new GenericEntityMapper(); // TO DO: make it work
         final GenericEntity genericEntity = GenericEntityMapper.genericToGenericEntity(genericObject);
         final String idString = genericObject.getId().toString();
         when(genericRepository.findById(eq(UUID.fromString(idString)))).thenReturn(Optional.of(genericEntity));

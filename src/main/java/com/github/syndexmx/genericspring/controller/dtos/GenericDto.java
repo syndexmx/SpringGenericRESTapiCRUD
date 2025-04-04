@@ -15,6 +15,6 @@ public class GenericDto {
 
     private String id;
 
-    private String genericFieldContent;
+    private String genericFields;
 
 }
