@@ -60,7 +60,12 @@ public class StringProcessor {
         if (current.contains(TemplatedAnnotation.genericFieldType)
                 || current.contains(TemplatedAnnotation.genericFieldName)) {
             StringBuilder stringBuilder = new StringBuilder();
+            boolean firstRound = true;
             for (String fieldName : fieldsMap.keySet()) {
+                if (!firstRound) {
+                    stringBuilder.append("\n");
+                }
+                firstRound = false;
                 String one = substitute(current,
                         TemplatedAnnotation.genericFieldName,
                         fieldName);
@@ -70,7 +75,7 @@ public class StringProcessor {
                 one = substitute(one,
                         TemplatedAnnotation.genericFieldType,
                         fieldsMap.get(fieldName));
-                stringBuilder.append(one + "\n");
+                stringBuilder.append(one);
             }
             current = stringBuilder.toString();
         }
