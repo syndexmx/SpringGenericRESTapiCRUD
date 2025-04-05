@@ -8,9 +8,16 @@ import java.util.Map;
 
 public class StringProcessor {
 
+    private static String TEMPLATED_ANNOTATION = "TemplatedAnnotation";
+
     protected static String processLine(String sourceString) {
 
         String current = sourceString;
+
+        if (sourceString.contains("@" + TEMPLATED_ANNOTATION)
+                || (sourceString.contains("import ") & sourceString.contains("@" + TEMPLATED_ANNOTATION))) {
+            return "";
+        }
 
         // Package and Imports
         if (sourceString.contains(TemplatedAnnotation.genericPackageAddress)) {
