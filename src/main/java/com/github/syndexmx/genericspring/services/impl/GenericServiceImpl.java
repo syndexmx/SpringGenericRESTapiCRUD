@@ -46,9 +46,9 @@ public class GenericServiceImpl implements GenericService {
     }
 
     @Override
-    public Optional<GenericObject> findById(String genericId) {
+    public Optional<GenericObject> findById(UUID genericId) {
         final Optional<GenericEntity> genericEntityFound = genericRepository
-                .findById(UUID.fromString(genericId));
+                .findById(genericId);
         final Optional<GenericObject> genericFound = genericEntityFound.map(genericEntity ->
                 GenericEntityMapper.map(genericEntity));
         return genericFound;
@@ -63,8 +63,8 @@ public class GenericServiceImpl implements GenericService {
     }
 
     @Override
-    public boolean isPresent(String genericId) {
-        return genericRepository.existsById(UUID.fromString(genericId));
+    public boolean isPresent(UUID genericId) {
+        return genericRepository.existsById(genericId);
     }
 
     @Override
@@ -73,9 +73,9 @@ public class GenericServiceImpl implements GenericService {
     }
 
     @Override
-    public void deleteById(String genericId) {
+    public void deleteById(UUID genericId) {
         try {
-            genericRepository.deleteById(UUID.fromString(genericId));
+            genericRepository.deleteById(genericId);
         } catch (final EmptyResultDataAccessException e) {
             log.debug("Attempted to delete non-existent generic");
         }

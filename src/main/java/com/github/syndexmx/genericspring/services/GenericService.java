@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @TemplatedAnnotation
 @Service
@@ -15,14 +16,14 @@ public interface GenericService {
 
     GenericObject save(GenericObject genericObject);
 
-    Optional<GenericObject> findById(String genericId);
+    Optional<GenericObject> findById(UUID genericId);
 
     List<GenericObject> listAll();
 
-    boolean isPresent(String genericId);
+    boolean isPresent(UUID genericId);
 
     boolean isPresent(GenericObject genericObject);
 
-    void deleteById(String genericId);
+    void deleteById(UUID genericId);
 
 }
