@@ -35,16 +35,30 @@ public class StringProcessor {
                     TemplatedAnnotation.targetObjectLowCaseName);
         }
 
-        // Field !!!!
-        if (current.contains(TemplatedAnnotation.genericFieldTypes)) {
+        // Fields !!!!
+        if (current.contains(TemplatedAnnotation.genericDependencyType)) {
             current = substitute(current,
-                    TemplatedAnnotation.genericFieldTypes,
-                    TemplatedAnnotation.targetFieldTypes);
+                    TemplatedAnnotation.genericDependencyType,
+                    TemplatedAnnotation.targetDependencyType);
         }
-        if (current.contains(TemplatedAnnotation.genericFieldNames)) {
+        if (current.contains(TemplatedAnnotation.genericDependencyVariable)) {
             current = substitute(current,
-                    TemplatedAnnotation.genericFieldNames,
-                    TemplatedAnnotation.targetFieldNames);
+                    TemplatedAnnotation.genericDependencyVariable,
+                    TemplatedAnnotation.targetDependencyVariable);
+        }
+        if (current.contains(TemplatedAnnotation.genericFieldType)
+                || current.contains(TemplatedAnnotation.genericFieldName)) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String fieldName : TemplatedAnnotation.fieldsMap.keySet()) {
+                String one = substitute(current,
+                        TemplatedAnnotation.genericFieldType,
+                        TemplatedAnnotation.fieldsMap.get(fieldName));
+                one = substitute(one,
+                        TemplatedAnnotation.genericFieldName,
+                        fieldName);
+                stringBuilder.append(one + "\n");
+            }
+            current = stringBuilder.toString();
         }
         // -- fields
 
@@ -59,7 +73,6 @@ public class StringProcessor {
             current = substitute(current,
                     TemplatedAnnotation.genericLowCaseName,
                     TemplatedAnnotation.targetLowCaseName);
-
         }
 
         if (current.contains(TemplatedAnnotation.genericIdType)) {

@@ -16,7 +16,7 @@ import java.util.UUID;
 public class GenericObject {
 
     private UUID id;
-
-    private GenericFields genericFields;
+    private Short genericField;
+    private GenericDependency genericDependency;
 
 }

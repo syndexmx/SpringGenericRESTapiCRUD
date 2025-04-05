@@ -20,8 +20,8 @@ public class GenericEntity {
 
     @Id
     private UUID genericId;
-
-    private String genericFieldContent;
+    private Short genericField;
+    private String genericDependency;
 
 
 }

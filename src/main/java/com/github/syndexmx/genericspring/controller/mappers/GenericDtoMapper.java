@@ -2,7 +2,7 @@ package com.github.syndexmx.genericspring.controller.mappers;
 
 import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 import com.github.syndexmx.genericspring.controller.dtos.GenericDto;
-import com.github.syndexmx.genericspring.domain.GenericFields;
+import com.github.syndexmx.genericspring.domain.GenericDependency;
 import com.github.syndexmx.genericspring.domain.GenericObject;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,8 @@ public class GenericDtoMapper {
     public static GenericDto map(GenericObject genericObject) {
         final GenericDto genericDto = GenericDto.builder()
                 .id(genericObject.getId().toString())
-                .genericFields(genericObject.getGenericFields().toString())
+                .genericField(genericObject.getGenericField())
+                .genericDependency(genericObject.getGenericDependency().toString())
                 .build();
         return genericDto;
     }
@@ -23,7 +24,8 @@ public class GenericDtoMapper {
     public static GenericObject map(GenericDto genericDto) {
         GenericObject genericObject = GenericObject.builder()
                 .id(UUID.fromString(genericDto.getId()))
-                .genericFields(GenericFields.valueOf(genericDto.getGenericFields()))
+                .genericField(genericDto.getGenericField())
+                .genericDependency(GenericDependency.valueOf(genericDto.getGenericDependency()))
                 .build();
         return genericObject;
     }
@@ -31,7 +33,8 @@ public class GenericDtoMapper {
     public static GenericObject mapWithNoId(GenericDto genericDto) {
         GenericObject genericObject = GenericObject.builder()
                 .id(UUID.randomUUID())
-                .genericFields(GenericFields.valueOf(genericDto.getGenericFields()))
+                .genericField(genericDto.getGenericField())
+                .genericDependency(GenericDependency.valueOf(genericDto.getGenericDependency()))
                 .build();
         return genericObject;
     }
