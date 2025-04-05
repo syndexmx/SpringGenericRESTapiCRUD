@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GenericEntityMapper {
 
-    public static GenericEntity genericToGenericEntity(GenericObject genericObject) {
+    public static GenericEntity map(GenericObject genericObject) {
         final GenericEntity genericEntity = GenericEntity.builder()
                 .genericId(genericObject.getId())
                 .genericFieldContent(genericObject.getGenericFields().toString())
@@ -18,7 +18,7 @@ public class GenericEntityMapper {
         return genericEntity;
     }
 
-    public static GenericObject genericEntityToGeneric(GenericEntity genericEntity) {
+    public static GenericObject map(GenericEntity genericEntity) {
         GenericObject genericObject = GenericObject.builder()
                 .id(genericEntity.getGenericId())
                 .genericFields(GenericFields.valueOf(genericEntity.getGenericFieldContent()))

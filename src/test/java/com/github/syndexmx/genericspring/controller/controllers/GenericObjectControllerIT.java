@@ -43,7 +43,7 @@ public class GenericObjectControllerIT {
     @Test
     public void testThatGenericIsCreated() throws Exception {
         GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final GenericDto genericDto = GenericDtoMapper.genericToGenericDto(genericObject);
+        final GenericDto genericDto = GenericDtoMapper.map(genericObject);
         final ObjectMapper objectMapper = new ObjectMapper();
         final String genericJson = objectMapper.writeValueAsString(genericDto);
         mockMvc.perform(MockMvcRequestBuilders.post(ROOT_API_PATH)
@@ -65,7 +65,7 @@ public class GenericObjectControllerIT {
         final UUID id = savedGeneric.getId();
         GenericObject modifiedGenericObject = GenericObjectTestSupplierKit.getModifiedTestGeneric();
         modifiedGenericObject.setId(id);
-        final GenericDto modifiedGenericDto = GenericDtoMapper.genericToGenericDto(modifiedGenericObject);
+        final GenericDto modifiedGenericDto = GenericDtoMapper.map(modifiedGenericObject);
         final ObjectMapper modifiedObjectMapper = new ObjectMapper();
         final String modifiedGenericJson = modifiedObjectMapper.writeValueAsString(modifiedGenericDto);
         mockMvc.perform(MockMvcRequestBuilders.put(ROOT_API_PATH + "/" + id.toString())
@@ -88,7 +88,7 @@ public class GenericObjectControllerIT {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
         final GenericObject genericObjectSaved = genericService.create(genericObject);
         final UUID id = genericObjectSaved.getId();
-        final GenericDto genericDto = GenericDtoMapper.genericToGenericDto(genericObjectSaved);
+        final GenericDto genericDto = GenericDtoMapper.map(genericObjectSaved);
         final ObjectMapper objectMapper = new ObjectMapper();
         final String genericJson = objectMapper.writeValueAsString(genericDto);
         mockMvc.perform(MockMvcRequestBuilders.get(ROOT_API_PATH + "/" + id.toString()))
@@ -107,7 +107,7 @@ public class GenericObjectControllerIT {
     public void testThatRetrieveAllReturnsListWhenExist() throws Exception {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
         final GenericObject genericObjectSaved = genericService.create(genericObject);
-        final GenericDto genericDto = GenericDtoMapper.genericToGenericDto(genericObjectSaved);
+        final GenericDto genericDto = GenericDtoMapper.map(genericObjectSaved);
         final List<GenericDto> listGenericDto = new ArrayList<>(List.of(genericDto));
         final ObjectMapper objectMapper = new ObjectMapper();
         final String genericListJson = objectMapper.writeValueAsString(listGenericDto);

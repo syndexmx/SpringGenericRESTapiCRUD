@@ -32,16 +32,16 @@ public class GenericServiceImpl implements GenericService {
         UUID spoofId = UUID.randomUUID();
         genericObject.setId(spoofId);
         final GenericEntity savedEntity = genericRepository.save(GenericEntityMapper
-                .genericToGenericEntity(genericObject));
-        final GenericObject savedGenericObject = GenericEntityMapper.genericEntityToGeneric(savedEntity);
+                .map(genericObject));
+        final GenericObject savedGenericObject = GenericEntityMapper.map(savedEntity);
         return savedGenericObject;
     }
 
     @Override
     public GenericObject save(GenericObject genericObject) {
         final GenericEntity savedEntity = genericRepository.save(GenericEntityMapper
-                .genericToGenericEntity(genericObject));
-        final GenericObject savedGenericObject = GenericEntityMapper.genericEntityToGeneric(savedEntity);
+                .map(genericObject));
+        final GenericObject savedGenericObject = GenericEntityMapper.map(savedEntity);
         return savedGenericObject;
     }
 
@@ -50,7 +50,7 @@ public class GenericServiceImpl implements GenericService {
         final Optional<GenericEntity> genericEntityFound = genericRepository
                 .findById(UUID.fromString(genericId));
         final Optional<GenericObject> genericFound = genericEntityFound.map(genericEntity ->
-                GenericEntityMapper.genericEntityToGeneric(genericEntity));
+                GenericEntityMapper.map(genericEntity));
         return genericFound;
     }
 
@@ -58,7 +58,7 @@ public class GenericServiceImpl implements GenericService {
     public List<GenericObject> listAll() {
         final List<GenericEntity> listOfFoundGenericEntities = genericRepository.findAll();
         final List<GenericObject> listOfFoundGenericObjects =listOfFoundGenericEntities.stream()
-                .map(entity -> GenericEntityMapper.genericEntityToGeneric(entity)).toList();
+                .map(entity -> GenericEntityMapper.map(entity)).toList();
         return listOfFoundGenericObjects;
     }
 
