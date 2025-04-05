@@ -50,7 +50,7 @@ public @interface TemplatedAnnotation {
     String targetType = targetClass;
 
     String genericLowCaseName = "generic";
-    String targetLowCaseName = targetClass;
+    String targetLowCaseName = targetClassCamel;
 
     String genericAllUpperCaseName = "GENERIC";
     String targetAllUpperCaseName = targetClassUpper;
