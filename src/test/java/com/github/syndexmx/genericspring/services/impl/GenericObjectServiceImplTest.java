@@ -35,7 +35,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatGenericIsCreated() {
         GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        GenericEntity genericEntity = GenericEntityMapper.genericToGenericEntity(genericObject);
+        GenericEntity genericEntity = GenericEntityMapper.map(genericObject);
         when(genericRepository.save(any())).thenReturn(genericEntity);
         final GenericObject savedGenericObject = underTest.create(genericObject);
         genericObject.setId(savedGenericObject.getId());
@@ -45,7 +45,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatGenericIsSaved() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final GenericEntity genericEntity = GenericEntityMapper.genericToGenericEntity(genericObject);
+        final GenericEntity genericEntity = GenericEntityMapper.map(genericObject);
         when(genericRepository.save(eq(genericEntity))).thenReturn(genericEntity);
         final GenericObject savedGenericObject = underTest.save(genericObject);
         assertEquals(genericObject, savedGenericObject);
@@ -63,7 +63,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatFindByIdReturnsEntityWhenPresent() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final GenericEntity genericEntity = GenericEntityMapper.genericToGenericEntity(genericObject);
+        final GenericEntity genericEntity = GenericEntityMapper.map(genericObject);
         final String idString = genericObject.getId().toString();
         when(genericRepository.findById(eq(UUID.fromString(idString)))).thenReturn(Optional.of(genericEntity));
         final Optional<GenericObject> foundGeneric = underTest.findById(idString);
@@ -80,7 +80,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testListGenericsReturnsListWhenExist() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final GenericEntity genericEntity = GenericEntityMapper.genericToGenericEntity(genericObject);
+        final GenericEntity genericEntity = GenericEntityMapper.map(genericObject);
         List<GenericEntity> listOfExisting = new ArrayList<>(List.of(genericEntity));
         when(genericRepository.findAll()).thenReturn(listOfExisting);
         final List<GenericObject> result = underTest.listAll();
