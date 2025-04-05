@@ -20,8 +20,8 @@ public @interface TemplatedAnnotation {
     String genericObjectLowCaseName = "genericObject";
     String targetObjectLowCaseName = "target"; //change here
 
-    String genericName = "Generic";
-    String targetName = "Target"; //change here
+    String genericType = "Generic";
+    String targetType = "Target"; //change here
 
     String genericLowCaseName = "generic";
     String targetLowCaseName = "target"; //change here
@@ -29,8 +29,8 @@ public @interface TemplatedAnnotation {
     String genericIdType = "UUID";
     String targetIdType = "UUID"; //change here
 
-    String genericDependencyType = "genericDependency";
-    String targetDependencyType = "genericDependency"; //change here
+    String genericDependencyType = "GenericDependency";
+    String targetDependencyType = "TargetDependency"; //change here
     String genericDependencyVariable = "genericDependency";
     String targetDependencyVariable = "targetDependency"; //change here
 

@@ -1,6 +1,10 @@
 package com.github.syndexmx.genericspring.annotations.processor.directory;
 
 import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
+import org.springframework.util.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class StringProcessor {
 
@@ -29,13 +33,13 @@ public class StringProcessor {
             }
         }
 
-        if (current.contains(TemplatedAnnotation.genericObjectLowCaseName)) {
-            current = substitute(current,
-                    TemplatedAnnotation.genericObjectLowCaseName,
-                    TemplatedAnnotation.targetObjectLowCaseName);
-        }
-
         // Fields !!!!
+        Map<String, String> fieldsMap = TemplatedAnnotation.fieldsMap;
+        Map<String, String> fieldsCapitalisedMap = new HashMap<String, String>();
+        for (String string : fieldsMap.keySet()) {
+            String stringCapitalized = StringUtils.capitalize(string);
+            fieldsCapitalisedMap.put(string, stringCapitalized);
+        }
         if (current.contains(TemplatedAnnotation.genericDependencyType)) {
             current = substitute(current,
                     TemplatedAnnotation.genericDependencyType,
@@ -49,24 +53,33 @@ public class StringProcessor {
         if (current.contains(TemplatedAnnotation.genericFieldType)
                 || current.contains(TemplatedAnnotation.genericFieldName)) {
             StringBuilder stringBuilder = new StringBuilder();
-            for (String fieldName : TemplatedAnnotation.fieldsMap.keySet()) {
+            for (String fieldName : fieldsMap.keySet()) {
                 String one = substitute(current,
-                        TemplatedAnnotation.genericFieldType,
-                        TemplatedAnnotation.fieldsMap.get(fieldName));
-                one = substitute(one,
                         TemplatedAnnotation.genericFieldName,
                         fieldName);
+                one = substitute(one,
+                        "get" + StringUtils.capitalize(TemplatedAnnotation.genericFieldName),
+                        "get" + fieldsCapitalisedMap.get(fieldName));
+                one = substitute(one,
+                        TemplatedAnnotation.genericFieldType,
+                        fieldsMap.get(fieldName));
                 stringBuilder.append(one + "\n");
             }
             current = stringBuilder.toString();
         }
         // -- fields
 
-
-        if (current.contains(TemplatedAnnotation.genericName)) {
+        if (current.contains(TemplatedAnnotation.genericObjectLowCaseName)) {
             current = substitute(current,
-                    TemplatedAnnotation.genericName,
-                    TemplatedAnnotation.targetName);
+                    TemplatedAnnotation.genericObjectLowCaseName,
+                    TemplatedAnnotation.targetObjectLowCaseName);
+        }
+
+
+        if (current.contains(TemplatedAnnotation.genericType)) {
+            current = substitute(current,
+                    TemplatedAnnotation.genericType,
+                    TemplatedAnnotation.targetType);
 
         }
         if (current.contains(TemplatedAnnotation.genericLowCaseName)) {
