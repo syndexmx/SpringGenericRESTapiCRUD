@@ -54,7 +54,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatFindByIdReturnsEmptyWhenNoEntity() {
         final GenericObject nonExistentGenericObject = GenericObjectTestSupplierKit.getTestNonExistentGeneric();
-        final String nonExistentId = nonExistentGenericObject.getId().toString();
+        final UUID nonExistentId = nonExistentGenericObject.getId().toString();
         when(genericRepository.findById(eq(UUID.fromString(nonExistentId)))).thenReturn(Optional.empty());
         final Optional<GenericObject> foundGeneric = underTest.findById(nonExistentId);
         assertEquals(Optional.empty(), foundGeneric);
@@ -64,7 +64,7 @@ public class GenericObjectServiceImplTest {
     public void testThatFindByIdReturnsEntityWhenPresent() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
         final GenericEntity genericEntity = GenericEntityMapper.map(genericObject);
-        final String idString = genericObject.getId().toString();
+        final UUID idString = genericObject.getId().toString();
         when(genericRepository.findById(eq(UUID.fromString(idString)))).thenReturn(Optional.of(genericEntity));
         final Optional<GenericObject> foundGeneric = underTest.findById(idString);
         assertEquals(Optional.of(genericObject), foundGeneric);
@@ -91,7 +91,7 @@ public class GenericObjectServiceImplTest {
     public void testThatIsPresentReturnsFalseWhenAbsent() {
         when(genericRepository.existsById(any())).thenReturn(false);
         final GenericObject nonExistentGenericObject = GenericObjectTestSupplierKit.getTestNonExistentGeneric();
-        final String nonExistentUuid = nonExistentGenericObject.getId().toString();
+        final UUID nonExistentUuid = nonExistentGenericObject.getId().toString();
         boolean result = underTest.isPresent(nonExistentUuid);
         assertFalse(result);
     }
@@ -99,7 +99,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatIsPresentReturnsTrueWhenExists() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final String idString = genericObject.getId().toString();
+        final UUID idString = genericObject.getId().toString();
         when(genericRepository.existsById(UUID.fromString(idString))).thenReturn(true);
         boolean result = underTest.isPresent(idString);
         assertTrue(result);
@@ -125,7 +125,7 @@ public class GenericObjectServiceImplTest {
     @Test
     public void testThatDeleteGenericDeletesGeneric() {
         final GenericObject genericObject = GenericObjectTestSupplierKit.getTestGeneric();
-        final String idString = genericObject.getId().toString();
+        final UUID idString = genericObject.getId().toString();
         underTest.deleteById(idString);
         verify(genericRepository).deleteById(eq(UUID.fromString(idString)));
     }

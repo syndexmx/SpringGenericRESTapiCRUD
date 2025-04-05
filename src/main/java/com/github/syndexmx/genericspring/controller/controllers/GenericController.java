@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @TemplatedAnnotation
 @RestController
@@ -38,7 +39,7 @@ public class GenericController {
     }
 
     @GetMapping(ROOT_API_PATH +"/{genericId}")
-    public ResponseEntity<GenericDto> retrieve(@PathVariable String genericId) {
+    public ResponseEntity<GenericDto> retrieve(@PathVariable UUID genericId) {
         log.debug("GET @ " + ROOT_API_PATH + " : " + genericId.toString());
         final Optional<GenericObject> foundGeneric = genericService.findById(genericId);
         if (foundGeneric.isEmpty()) {
@@ -76,7 +77,7 @@ public class GenericController {
     }
 
     @DeleteMapping(ROOT_API_PATH +"/{genericId}")
-    public ResponseEntity deleteById(@PathVariable String genericId) {
+    public ResponseEntity deleteById(@PathVariable UUID genericId) {
         log.info("DELETE @ " + ROOT_API_PATH + " : " + genericId.toString());
         genericService.deleteById(genericId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
