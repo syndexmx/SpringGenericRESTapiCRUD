@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class GenericDto {
 
     private String id;
-
-    private String genericFields;
+    private Short genericField;
+    private String genericDependency;
 
 }

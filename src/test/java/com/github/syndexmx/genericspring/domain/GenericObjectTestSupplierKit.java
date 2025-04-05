@@ -9,30 +9,30 @@ public class GenericObjectTestSupplierKit {
 
     private static UUID id = UUID.randomUUID();
 
-    private static GenericFields GENERIC_FIELD_VALUE = GenericFields.DEFAULTVALUE;
-    private static GenericFields GENERIC_STRING_MODIFIED = GenericFields.ALTERNATIVEVALUE;
+    private static GenericDependency GENERIC_FIELD_VALUE = GenericDependency.DEFAULTVALUE;
+    private static GenericDependency GENERIC_STRING_MODIFIED = GenericDependency.ALTERNATIVEVALUE;
 
     public static GenericObject getTestGeneric() {
         return GenericObject.builder()
                 .id(id)
-                .genericFields(GENERIC_FIELD_VALUE)
+                .genericDependency(GENERIC_FIELD_VALUE)
                 .build();
     }
 
     public static GenericObject getModifiedTestGeneric() {
         return GenericObject.builder()
                 .id(id)
-                .genericFields(GENERIC_STRING_MODIFIED)
+                .genericDependency(GENERIC_STRING_MODIFIED)
                 .build();
     }
 
     private static UUID NON_EXISTENT_UUID = UUID.randomUUID();
-    private static GenericFields NON_EXISTANT_VALUE = GenericFields.OTHERVALUE;
+    private static GenericDependency NON_EXISTANT_VALUE = GenericDependency.OTHERVALUE;
 
     public static GenericObject getTestNonExistentGeneric( ) {
         return GenericObject.builder()
                 .id(NON_EXISTENT_UUID)
-                .genericFields(NON_EXISTANT_VALUE)
+                .genericDependency(NON_EXISTANT_VALUE)
                 .build();
     }
 
