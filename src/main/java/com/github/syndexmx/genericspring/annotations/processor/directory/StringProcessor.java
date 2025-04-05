@@ -69,6 +69,13 @@ public class StringProcessor {
 
         }
 
+        if (current.contains(TemplatedAnnotation.genericAllUpperCaseName)) {
+            current = substitute(current,
+                    TemplatedAnnotation.genericAllUpperCaseName,
+                    TemplatedAnnotation.targetAllUpperCaseName);
+
+        }
+
         return current;
     }
 
