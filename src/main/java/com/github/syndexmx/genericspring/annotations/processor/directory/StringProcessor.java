@@ -14,7 +14,7 @@ public class StringProcessor {
 
         String current = sourceString;
 
-        if (sourceString.contains("@" + TEMPLATED_ANNOTATION)
+        if ((sourceString.indexOf("@" + TEMPLATED_ANNOTATION) == 0)
                 || (sourceString.contains("import ") & sourceString.contains(TEMPLATED_ANNOTATION))) {
             return "";
         }

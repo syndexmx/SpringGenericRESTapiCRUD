@@ -6,6 +6,8 @@ import com.github.syndexmx.genericspring.domain.GenericObject;
 import com.github.syndexmx.genericspring.repository.entities.GenericEntity;
 import org.springframework.stereotype.Component;
 
+import java.nio.channels.MulticastChannel;
+
 @TemplatedAnnotation
 @Component
 public class GenericEntityMapper {

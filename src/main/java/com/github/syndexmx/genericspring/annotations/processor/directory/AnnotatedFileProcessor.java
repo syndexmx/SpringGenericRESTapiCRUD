@@ -15,6 +15,15 @@ public class AnnotatedFileProcessor {
             BufferedReader bReader = new BufferedReader(new FileReader(file));
             String line = bReader.readLine();
             while (line != null) {
+                if (line.contains("@TemplatedAnnotation{")) {
+                    StringBuilder blockBuilder = new StringBuilder();
+                    String nextBlockLine = bReader.readLine();
+                    while (!nextBlockLine.contains("@TemplatedAnnotation}")) {
+                        blockBuilder.append(nextBlockLine + "\n");
+                        nextBlockLine = bReader.readLine();
+                    }
+                    line = blockBuilder.toString();
+                }
                 classBuilder.append(processLine(line) + "\n");
                 line = bReader.readLine();
             }
