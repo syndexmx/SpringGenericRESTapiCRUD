@@ -17,6 +17,12 @@ public class GenericEntityMapper {
                 .genericId(genericObject.getId())
                 .genericField(genericObject.getGenericField())
                 .genericDependency(genericObject.getGenericDependency().toString())
+                //@TemplatedAnnotation{
+                .genericDependencyList(genericObject.getGenericDependencyList().stream()
+                        .map(genericDependency ->
+                                genericDependency.toString()) // genericDependency Mapping
+                        .toList())
+                //@TemplatedAnnotation}
                 .build();
         return genericEntity;
     }
@@ -26,6 +32,12 @@ public class GenericEntityMapper {
                 .id(genericEntity.getGenericId())
                 .genericField(genericEntity.getGenericField())
                 .genericDependency(GenericDependency.valueOf(genericEntity.getGenericDependency()))
+                //@TemplatedAnnotation{
+                .genericDependencyList(genericEntity.getGenericDependencyList().stream()
+                        .map(genericDependency ->
+                                GenericDependency.valueOf(genericDependency)) // genericDependency Mapping
+                        .toList())
+                //@TemplatedAnnotation}
                 .build();
         return genericObject;
     }

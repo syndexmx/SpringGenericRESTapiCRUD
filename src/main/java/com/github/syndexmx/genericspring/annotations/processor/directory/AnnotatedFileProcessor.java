@@ -18,9 +18,14 @@ public class AnnotatedFileProcessor {
                 if (line.contains("@TemplatedAnnotation{")) {
                     StringBuilder blockBuilder = new StringBuilder();
                     String nextBlockLine = bReader.readLine();
+                    boolean isFirstLine = true;
                     while (!nextBlockLine.contains("@TemplatedAnnotation}")) {
-                        blockBuilder.append(nextBlockLine + "\n");
+                        if (!isFirstLine) {
+                            blockBuilder.append("\n");
+                        }
+                        blockBuilder.append(nextBlockLine);
                         nextBlockLine = bReader.readLine();
+                        isFirstLine = false;
                     }
                     line = blockBuilder.toString();
                 }
