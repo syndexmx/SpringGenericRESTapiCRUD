@@ -21,7 +21,7 @@ public class AnnotatedFileProcessor {
                     boolean isFirstLine = true;
                     while (!nextBlockLine.contains("@TemplatedAnnotation}")) {
                         if (!isFirstLine) {
-                            blockBuilder.append("n");
+                            blockBuilder.append("\n");
                         }
                         blockBuilder.append(nextBlockLine);
                         nextBlockLine = bReader.readLine();
