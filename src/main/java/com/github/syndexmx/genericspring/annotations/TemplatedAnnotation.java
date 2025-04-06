@@ -90,6 +90,13 @@ public @interface TemplatedAnnotation {
     String genericAllUpperCaseName = "GENERIC";
     String targetAllUpperCaseName = "TARGET"; //change
 
+    //@TemplatedAnnotation{
+        whole
+        multiline
+        block
+        with generic
+    //@TemplatedAnnotation}
+
      */
 
 }
