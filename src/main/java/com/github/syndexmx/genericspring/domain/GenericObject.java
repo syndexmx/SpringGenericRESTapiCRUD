@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @TemplatedAnnotation
@@ -18,5 +19,6 @@ public class GenericObject {
     private UUID id;
     private Short genericField;
     private GenericDependency genericDependency;
+    private List<GenericDependency> genericDependencyList;
 
 }

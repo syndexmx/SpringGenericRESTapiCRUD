@@ -2,6 +2,7 @@ package com.github.syndexmx.genericspring.domain;
 
 import com.github.syndexmx.genericspring.annotations.TemplatedAnnotation;
 
+import java.util.List;
 import java.util.UUID;
 
 @TemplatedAnnotation
@@ -15,6 +16,7 @@ public class GenericObjectTestSupplierKit {
     public static GenericObject getTestGeneric() {
         return GenericObject.builder()
                 .id(id)
+                .genericDependencyList(List.of())
                 .genericDependency(GENERIC_FIELD_VALUE)
                 .build();
     }
@@ -23,6 +25,7 @@ public class GenericObjectTestSupplierKit {
         return GenericObject.builder()
                 .id(id)
                 .genericDependency(GENERIC_STRING_MODIFIED)
+                .genericDependencyList(List.of())
                 .build();
     }
 
@@ -33,6 +36,7 @@ public class GenericObjectTestSupplierKit {
         return GenericObject.builder()
                 .id(NON_EXISTENT_UUID)
                 .genericDependency(NON_EXISTANT_VALUE)
+                .genericDependencyList(List.of())
                 .build();
     }
 

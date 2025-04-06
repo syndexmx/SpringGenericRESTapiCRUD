@@ -17,6 +17,12 @@ public class GenericDtoMapper {
                 .id(genericObject.getId().toString())
                 .genericField(genericObject.getGenericField())
                 .genericDependency(genericObject.getGenericDependency().toString())
+                //@TemplatedAnnotation{
+                .genericDependencyList(genericObject.getGenericDependencyList().stream()
+                        .map(genericDependency ->
+                                genericDependency.toString()) // genericDependency Mapping
+                        .toList())
+                //@TemplatedAnnotation}
                 .build();
         return genericDto;
     }
@@ -26,6 +32,12 @@ public class GenericDtoMapper {
                 .id(UUID.fromString(genericDto.getId()))
                 .genericField(genericDto.getGenericField())
                 .genericDependency(GenericDependency.valueOf(genericDto.getGenericDependency()))
+                //@TemplatedAnnotation{
+                .genericDependencyList(genericDto.getGenericDependencyList().stream()
+                        .map(genericDependency ->
+                                GenericDependency.valueOf(genericDependency)) // genericDependency Mapping
+                        .toList())
+                //@TemplatedAnnotation}
                 .build();
         return genericObject;
     }
@@ -35,6 +47,12 @@ public class GenericDtoMapper {
                 .id(UUID.randomUUID())
                 .genericField(genericDto.getGenericField())
                 .genericDependency(GenericDependency.valueOf(genericDto.getGenericDependency()))
+                //@TemplatedAnnotation{
+                .genericDependencyList(genericDto.getGenericDependencyList().stream()
+                        .map(genericDependency ->
+                                GenericDependency.valueOf(genericDependency)) // genericDependency Mapping
+                        .toList())
+                //@TemplatedAnnotation}
                 .build();
         return genericObject;
     }

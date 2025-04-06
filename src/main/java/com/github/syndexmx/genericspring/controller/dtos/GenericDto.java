@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @TemplatedAnnotation
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +18,6 @@ public class GenericDto {
     private String id;
     private Short genericField;
     private String genericDependency;
+    private List<String> genericDependencyList;
 
 }
